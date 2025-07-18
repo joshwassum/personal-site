@@ -5,6 +5,8 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Portfolio from './pages/Portfolio';
 import Skills from './pages/Skills';
+import Experience from './pages/Experience';
+import Contact from './pages/Contact';
 import { useDarkMode } from './hooks/useDarkMode';
 
 function App() {
@@ -18,8 +20,8 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/skills" element={<Skills />} />
-          <Route path="/experience" element={<div className="p-8 text-center">Experience Page - Coming Soon</div>} />
-          <Route path="/contact" element={<div className="p-8 text-center">Contact Page - Coming Soon</div>} />
+          <Route path="/experience" element={<Experience />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </Layout>
     </Router>
