@@ -11,6 +11,8 @@ import AdminLogin from './pages/AdminLogin';
 import AdminLayout from './components/AdminLayout';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminBlog from './pages/AdminBlog';
+import AdminBlogCreate from './pages/AdminBlogCreate';
+import AdminBlogEdit from './pages/AdminBlogEdit';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useDarkMode } from './hooks/useDarkMode';
 
@@ -80,20 +82,14 @@ function App() {
         <Route path="/admin/blog/new" element={
           <ProtectedRoute>
             <AdminLayout>
-              <div className="text-center py-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">Create New Blog Post</h2>
-                <p className="text-gray-600">Blog post creation form coming soon...</p>
-              </div>
+              <AdminBlogCreate />
             </AdminLayout>
           </ProtectedRoute>
         } />
         <Route path="/admin/blog/edit/:id" element={
           <ProtectedRoute>
             <AdminLayout>
-              <div className="text-center py-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">Edit Blog Post</h2>
-                <p className="text-gray-600">Blog post editing form coming soon...</p>
-              </div>
+              <AdminBlogEdit />
             </AdminLayout>
           </ProtectedRoute>
         } />
