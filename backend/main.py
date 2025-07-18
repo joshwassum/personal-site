@@ -4,27 +4,33 @@ from fastapi.responses import JSONResponse
 import uvicorn
 from dotenv import load_dotenv
 import os
+from app.config import settings
+from app.models.database import engine
+from app.models import Base
 
 # Load environment variables
 load_dotenv()
 
 # Create FastAPI app
 app = FastAPI(
-    title="Personal Website API",
+    title=settings.project_name,
     description="Backend API for personal website portfolio",
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc"
 )
 
+# Create database tables
+Base.metadata.create_all(bind=engine)
+
+# Include API routers
+from app.api.auth import router as auth_router
+app.include_router(auth_router, prefix="/api")
+
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",  # React dev server
-        "http://localhost:5173",  # Vite dev server
-        "https://yourdomain.com",  # Production domain (update this)
-    ],
+    allow_origins=settings.allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
