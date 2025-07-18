@@ -7,6 +7,11 @@ import Portfolio from './pages/Portfolio';
 import Skills from './pages/Skills';
 import Experience from './pages/Experience';
 import Contact from './pages/Contact';
+import AdminLogin from './pages/AdminLogin';
+import AdminLayout from './components/AdminLayout';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminBlog from './pages/AdminBlog';
+import ProtectedRoute from './components/ProtectedRoute';
 import { useDarkMode } from './hooks/useDarkMode';
 
 function App() {
@@ -14,16 +19,125 @@ function App() {
 
   return (
     <Router>
-      <Layout darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/skills" element={<Skills />} />
-          <Route path="/experience" element={<Experience />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </Layout>
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={
+          <Layout darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
+            <Home />
+          </Layout>
+        } />
+        <Route path="/about" element={
+          <Layout darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
+            <About />
+          </Layout>
+        } />
+        <Route path="/portfolio" element={
+          <Layout darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
+            <Portfolio />
+          </Layout>
+        } />
+        <Route path="/skills" element={
+          <Layout darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
+            <Skills />
+          </Layout>
+        } />
+        <Route path="/experience" element={
+          <Layout darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
+            <Experience />
+          </Layout>
+        } />
+        <Route path="/contact" element={
+          <Layout darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
+            <Contact />
+          </Layout>
+        } />
+
+        {/* Admin Routes */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        
+        {/* Protected Admin Routes */}
+        <Route path="/admin" element={
+          <ProtectedRoute>
+            <AdminLayout>
+              <AdminDashboard />
+            </AdminLayout>
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/dashboard" element={
+          <ProtectedRoute>
+            <AdminLayout>
+              <AdminDashboard />
+            </AdminLayout>
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/blog" element={
+          <ProtectedRoute>
+            <AdminLayout>
+              <AdminBlog />
+            </AdminLayout>
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/blog/new" element={
+          <ProtectedRoute>
+            <AdminLayout>
+              <div className="text-center py-12">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Create New Blog Post</h2>
+                <p className="text-gray-600">Blog post creation form coming soon...</p>
+              </div>
+            </AdminLayout>
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/blog/edit/:id" element={
+          <ProtectedRoute>
+            <AdminLayout>
+              <div className="text-center py-12">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Edit Blog Post</h2>
+                <p className="text-gray-600">Blog post editing form coming soon...</p>
+              </div>
+            </AdminLayout>
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/newsletters" element={
+          <ProtectedRoute>
+            <AdminLayout>
+              <div className="text-center py-12">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Newsletter Management</h2>
+                <p className="text-gray-600">Newsletter management coming soon...</p>
+              </div>
+            </AdminLayout>
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/contact" element={
+          <ProtectedRoute>
+            <AdminLayout>
+              <div className="text-center py-12">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Contact Messages</h2>
+                <p className="text-gray-600">Contact message management coming soon...</p>
+              </div>
+            </AdminLayout>
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/sections" element={
+          <ProtectedRoute>
+            <AdminLayout>
+              <div className="text-center py-12">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Section Visibility</h2>
+                <p className="text-gray-600">Section visibility controls coming soon...</p>
+              </div>
+            </AdminLayout>
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/settings" element={
+          <ProtectedRoute>
+            <AdminLayout>
+              <div className="text-center py-12">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Settings</h2>
+                <p className="text-gray-600">Admin settings coming soon...</p>
+              </div>
+            </AdminLayout>
+          </ProtectedRoute>
+        } />
+      </Routes>
     </Router>
   );
 }
