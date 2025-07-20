@@ -1,176 +1,120 @@
 import React, { useState } from 'react';
-import { ExternalLink, Github, Filter, Code, Database, Globe, Smartphone, Palette } from 'lucide-react';
+import { ExternalLink, Github, Filter, Code, Database, Brain } from 'lucide-react';
 
 interface Project {
-  id: number;
+  id: string;
   title: string;
   description: string;
   image: string;
   technologies: string[];
   category: string;
-  githubUrl: string;
-  liveUrl: string;
+  githubUrl?: string;
+  liveUrl?: string;
+  status: 'completed' | 'in-progress' | 'planned';
   featured: boolean;
 }
 
 const Portfolio: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedStatus, setSelectedStatus] = useState<string>('all');
 
   const projects: Project[] = [
     {
-      id: 1,
-      title: 'E-Commerce Platform',
-      description: 'A full-stack e-commerce platform built with React, Node.js, and PostgreSQL. Features include user authentication, payment processing, and admin dashboard.',
-      image: '/api/placeholder/400/300',
-      technologies: ['React', 'Node.js', 'PostgreSQL', 'Stripe'],
-      category: 'fullstack',
-      githubUrl: 'https://github.com/yourusername/ecommerce',
-      liveUrl: 'https://ecommerce-demo.com',
-      featured: true,
+      id: '1',
+      title: 'MTGA AI Assistant',
+      description: 'AI-powered Magic: The Gathering Arena companion app and website that provides personalized collection management advice with a focus on individuality and anti-netdecking strategies.',
+      image: '/api/placeholder/600/400',
+      technologies: ['Python', 'React', 'Vite', 'AI Integration', 'TypeScript'],
+      category: 'ai',
+      status: 'in-progress',
+      featured: true
     },
     {
-      id: 2,
-      title: 'Task Management App',
-      description: 'A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.',
-      image: '/api/placeholder/400/300',
-      technologies: ['React', 'TypeScript', 'Firebase', 'Tailwind CSS'],
-      category: 'frontend',
-      githubUrl: 'https://github.com/yourusername/task-app',
-      liveUrl: 'https://task-app-demo.com',
-      featured: true,
-    },
-    {
-      id: 3,
-      title: 'API Gateway Service',
-      description: 'A microservices API gateway built with Python and FastAPI, handling authentication, rate limiting, and request routing.',
-      image: '/api/placeholder/400/300',
-      technologies: ['Python', 'FastAPI', 'Redis', 'Docker'],
+      id: '2',
+      title: 'Web Crawler - Accessibility Analysis',
+      description: 'Custom Python-based web crawler that parses websites to identify accessible and inaccessible pages, with configurable depth and traversal options for comprehensive accessibility analysis.',
+      image: '/api/placeholder/600/400',
+      technologies: ['Python', 'Web Scraping', 'Accessibility', 'Data Analysis'],
       category: 'backend',
-      githubUrl: 'https://github.com/yourusername/api-gateway',
-      liveUrl: 'https://api-gateway-docs.com',
-      featured: false,
+      status: 'completed',
+      featured: true
     },
     {
-      id: 4,
-      title: 'Mobile Fitness App',
-      description: 'A React Native fitness tracking app with workout plans, progress tracking, and social features.',
-      image: '/api/placeholder/400/300',
-      technologies: ['React Native', 'Expo', 'Firebase', 'Redux'],
-      category: 'mobile',
-      githubUrl: 'https://github.com/yourusername/fitness-app',
-      liveUrl: 'https://fitness-app-demo.com',
-      featured: false,
+      id: '3',
+      title: 'XML to JSON Converter',
+      description: 'Python utility tool designed to facilitate specific data conversion needs between XML and JSON formats, streamlining data transformation workflows.',
+      image: '/api/placeholder/600/400',
+      technologies: ['Python', 'Data Transformation', 'XML', 'JSON'],
+      category: 'backend',
+      status: 'completed',
+      featured: false
     },
     {
-      id: 5,
-      title: 'Design System Library',
-      description: 'A comprehensive design system built with React and Storybook, featuring reusable components and design tokens.',
-      image: '/api/placeholder/400/300',
-      technologies: ['React', 'Storybook', 'TypeScript', 'Styled Components'],
+      id: '4',
+      title: 'Personal Website',
+      description: 'Modern portfolio website built with React, TypeScript, and FastAPI, featuring admin authentication, blog management, and AI-augmented development practices.',
+      image: '/api/placeholder/600/400',
+      technologies: ['React', 'TypeScript', 'FastAPI', 'Python', 'Tailwind CSS'],
       category: 'frontend',
-      githubUrl: 'https://github.com/yourusername/design-system',
-      liveUrl: 'https://design-system-docs.com',
-      featured: false,
-    },
-    {
-      id: 6,
-      title: 'Data Analytics Dashboard',
-      description: 'A real-time analytics dashboard with interactive charts, data visualization, and export capabilities.',
-      image: '/api/placeholder/400/300',
-      technologies: ['React', 'D3.js', 'Python', 'PostgreSQL'],
-      category: 'fullstack',
-      githubUrl: 'https://github.com/yourusername/analytics-dashboard',
-      liveUrl: 'https://analytics-demo.com',
-      featured: true,
-    },
+      status: 'completed',
+      featured: true
+    }
   ];
 
   const categories = [
-    { id: 'all', name: 'All Projects', icon: Filter },
-    { id: 'fullstack', name: 'Full Stack', icon: Code },
-    { id: 'frontend', name: 'Frontend', icon: Palette },
+    { id: 'all', name: 'All Projects', icon: Code },
+    { id: 'frontend', name: 'Frontend', icon: Code },
     { id: 'backend', name: 'Backend', icon: Database },
-    { id: 'mobile', name: 'Mobile', icon: Smartphone },
+    { id: 'ai', name: 'AI & ML', icon: Brain },
   ];
 
-  const filteredProjects = selectedCategory === 'all' 
-    ? projects 
-    : projects.filter(project => project.category === selectedCategory);
+  const statuses = [
+    { id: 'all', name: 'All Status' },
+    { id: 'completed', name: 'Completed' },
+    { id: 'in-progress', name: 'In Progress' },
+    { id: 'planned', name: 'Planned' },
+  ];
 
-  const featuredProjects = projects.filter(project => project.featured);
+  const filteredProjects = projects.filter(project => {
+    const categoryMatch = selectedCategory === 'all' || project.category === selectedCategory;
+    const statusMatch = selectedStatus === 'all' || project.status === selectedStatus;
+    return categoryMatch && statusMatch;
+  });
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'completed': return 'text-green-600 dark:text-green-400';
+      case 'in-progress': return 'text-yellow-600 dark:text-yellow-400';
+      case 'planned': return 'text-blue-600 dark:text-blue-400';
+      default: return 'text-secondary-600 dark:text-secondary-400';
+    }
+  };
+
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case 'completed': return 'Completed';
+      case 'in-progress': return 'In Progress';
+      case 'planned': return 'Planned';
+      default: return status;
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Hero Section */}
       <div className="text-center mb-16">
         <h1 className="text-4xl md:text-6xl font-bold text-secondary-900 dark:text-secondary-100 mb-6">
-          My <span className="text-primary-600 dark:text-primary-400">Portfolio</span>
+          Project <span className="text-primary-600 dark:text-primary-400">Portfolio</span>
         </h1>
         <p className="text-xl text-secondary-600 dark:text-secondary-400 max-w-3xl mx-auto">
-          A collection of projects that showcase my skills in full-stack development,
-          from concept to deployment.
+          A showcase of my personal projects, from AI-powered applications to data processing tools, 
+          demonstrating my passion for innovation and problem-solving.
         </p>
       </div>
 
-      {/* Featured Projects */}
-      <div className="mb-16">
-        <h2 className="text-3xl font-bold text-secondary-900 dark:text-secondary-100 mb-8 text-center">
-          Featured Projects
-        </h2>
-        <div className="grid lg:grid-cols-2 gap-8">
-          {featuredProjects.map((project) => (
-            <div key={project.id} className="card group hover:shadow-lg transition-shadow duration-300">
-              <div className="relative overflow-hidden rounded-lg mb-6">
-                <div className="w-full h-48 bg-gradient-to-br from-primary-100 to-primary-200 dark:from-primary-900/20 dark:to-primary-800/20 flex items-center justify-center">
-                  <Globe size={64} className="text-primary-600 dark:text-primary-400" />
-                </div>
-                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-4">
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-white text-secondary-900 p-3 rounded-full hover:bg-primary-100 transition-colors duration-200"
-                    >
-                      <ExternalLink size={20} />
-                    </a>
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-white text-secondary-900 p-3 rounded-full hover:bg-primary-100 transition-colors duration-200"
-                    >
-                      <Github size={20} />
-                    </a>
-                  </div>
-                </div>
-              </div>
-              
-              <h3 className="text-2xl font-bold text-secondary-900 dark:text-secondary-100 mb-3">
-                {project.title}
-              </h3>
-              <p className="text-secondary-600 dark:text-secondary-400 mb-4">
-                {project.description}
-              </p>
-              
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.technologies.map((tech, index) => (
-                  <span
-                    key={index}
-                    className="px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm rounded-full"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Filter Categories */}
+      {/* Filters */}
       <div className="mb-12">
-        <div className="flex flex-wrap justify-center gap-4">
+        <div className="flex flex-wrap justify-center gap-4 mb-6">
           {categories.map((category) => (
             <button
               key={category.id}
@@ -186,66 +130,200 @@ const Portfolio: React.FC = () => {
             </button>
           ))}
         </div>
+        <div className="flex flex-wrap justify-center gap-4">
+          {statuses.map((status) => (
+            <button
+              key={status.id}
+              onClick={() => setSelectedStatus(status.id)}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors duration-200 ${
+                selectedStatus === status.id
+                  ? 'bg-primary-600 text-white'
+                  : 'bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:bg-secondary-200 dark:hover:bg-secondary-700'
+              }`}
+            >
+              {status.name}
+            </button>
+          ))}
+        </div>
       </div>
 
-      {/* All Projects Grid */}
+      {/* Featured Projects */}
+      {filteredProjects.filter(p => p.featured).length > 0 && (
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-secondary-900 dark:text-secondary-100 mb-8 text-center">
+            Featured Projects
+          </h2>
+          <div className="grid lg:grid-cols-2 gap-8">
+            {filteredProjects
+              .filter(project => project.featured)
+              .map((project) => (
+                <div key={project.id} className="card group hover:shadow-xl transition-shadow duration-300">
+                  <div className="relative overflow-hidden rounded-lg mb-6">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute top-4 right-4">
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium bg-white/90 dark:bg-secondary-900/90 ${getStatusColor(project.status)}`}>
+                        {getStatusLabel(project.status)}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <h3 className="text-2xl font-bold text-secondary-900 dark:text-secondary-100 mb-3">
+                    {project.title}
+                  </h3>
+                  
+                  <p className="text-secondary-600 dark:text-secondary-400 mb-4">
+                    {project.description}
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {project.technologies.map((tech, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-1 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 text-sm rounded-full"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  <div className="flex space-x-4">
+                    {project.githubUrl && (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center space-x-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
+                      >
+                        <Github size={20} />
+                        <span>GitHub</span>
+                      </a>
+                    )}
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center space-x-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
+                      >
+                        <ExternalLink size={20} />
+                        <span>Live Demo</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
+      )}
+
+      {/* All Projects */}
       <div>
         <h2 className="text-3xl font-bold text-secondary-900 dark:text-secondary-100 mb-8 text-center">
           All Projects
         </h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project) => (
             <div key={project.id} className="card group hover:shadow-lg transition-shadow duration-300">
               <div className="relative overflow-hidden rounded-lg mb-4">
-                <div className="w-full h-40 bg-gradient-to-br from-primary-100 to-primary-200 dark:from-primary-900/20 dark:to-primary-800/20 flex items-center justify-center">
-                  <Globe size={48} className="text-primary-600 dark:text-primary-400" />
-                </div>
-                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-white text-secondary-900 p-2 rounded-full hover:bg-primary-100 transition-colors duration-200"
-                    >
-                      <ExternalLink size={16} />
-                    </a>
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-white text-secondary-900 p-2 rounded-full hover:bg-primary-100 transition-colors duration-200"
-                    >
-                      <Github size={16} />
-                    </a>
-                  </div>
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute top-2 right-2">
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium bg-white/90 dark:bg-secondary-900/90 ${getStatusColor(project.status)}`}>
+                    {getStatusLabel(project.status)}
+                  </span>
                 </div>
               </div>
               
               <h3 className="text-xl font-bold text-secondary-900 dark:text-secondary-100 mb-2">
                 {project.title}
               </h3>
-              <p className="text-secondary-600 dark:text-secondary-400 mb-3 text-sm">
+              
+              <p className="text-secondary-600 dark:text-secondary-400 mb-4 text-sm">
                 {project.description}
               </p>
               
-              <div className="flex flex-wrap gap-1">
+              <div className="flex flex-wrap gap-1 mb-4">
                 {project.technologies.slice(0, 3).map((tech, index) => (
                   <span
                     key={index}
-                    className="px-2 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-xs rounded-full"
+                    className="px-2 py-1 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 text-xs rounded-full"
                   >
                     {tech}
                   </span>
                 ))}
                 {project.technologies.length > 3 && (
                   <span className="px-2 py-1 bg-secondary-100 dark:bg-secondary-800 text-secondary-600 dark:text-secondary-400 text-xs rounded-full">
-                    +{project.technologies.length - 3}
+                    +{project.technologies.length - 3} more
                   </span>
+                )}
+              </div>
+              
+              <div className="flex space-x-4">
+                {project.githubUrl && (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-1 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors text-sm"
+                  >
+                    <Github size={16} />
+                    <span>GitHub</span>
+                  </a>
+                )}
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-1 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors text-sm"
+                  >
+                    <ExternalLink size={16} />
+                    <span>Demo</span>
+                  </a>
                 )}
               </div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Project Stats */}
+      <div className="mt-16 bg-primary-50 dark:bg-primary-900/20 rounded-lg p-8">
+        <h2 className="text-3xl font-bold text-secondary-900 dark:text-secondary-100 mb-8 text-center">
+          Project Statistics
+        </h2>
+        <div className="grid md:grid-cols-4 gap-8">
+          <div className="text-center">
+            <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">
+              {projects.length}
+            </div>
+            <div className="text-secondary-700 dark:text-secondary-300">Total Projects</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">
+              {projects.filter(p => p.status === 'completed').length}
+            </div>
+            <div className="text-secondary-700 dark:text-secondary-300">Completed</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">
+              {projects.filter(p => p.status === 'in-progress').length}
+            </div>
+            <div className="text-secondary-700 dark:text-secondary-300">In Progress</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">
+              {projects.filter(p => p.featured).length}
+            </div>
+            <div className="text-secondary-700 dark:text-secondary-300">Featured</div>
+          </div>
         </div>
       </div>
     </div>

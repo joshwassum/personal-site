@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Code, Globe, Smartphone, Palette, Server, Zap } from 'lucide-react';
+import { Code, Globe, Smartphone, Palette, Server, Zap, Brain } from 'lucide-react';
 
 interface Skill {
   name: string;
@@ -14,35 +14,35 @@ const Skills: React.FC = () => {
 
   const skills: Skill[] = [
     // Frontend Skills
-    { name: 'React', proficiency: 95, category: 'frontend', description: 'Modern React with hooks, context, and performance optimization' },
-    { name: 'TypeScript', proficiency: 90, category: 'frontend', description: 'Type-safe JavaScript development' },
-    { name: 'Next.js', proficiency: 85, category: 'frontend', description: 'Full-stack React framework' },
-    { name: 'Tailwind CSS', proficiency: 92, category: 'frontend', description: 'Utility-first CSS framework' },
-    { name: 'HTML/CSS', proficiency: 95, category: 'frontend', description: 'Semantic HTML and modern CSS' },
-    { name: 'JavaScript', proficiency: 90, category: 'frontend', description: 'ES6+ features and modern patterns' },
+    { name: 'React', proficiency: 70, category: 'frontend', description: 'Currently developing proficiency, working on modern React patterns' },
+    { name: 'TypeScript', proficiency: 85, category: 'frontend', description: 'Advanced TypeScript development with type safety' },
+    { name: 'JavaScript', proficiency: 85, category: 'frontend', description: 'Advanced JavaScript with ES6+ features and modern patterns' },
+    { name: 'HTML/CSS', proficiency: 80, category: 'frontend', description: 'Semantic HTML and responsive CSS design' },
 
     // Backend Skills
-    { name: 'Python', proficiency: 88, category: 'backend', description: 'FastAPI, Django, and data processing' },
-    { name: 'FastAPI', proficiency: 85, category: 'backend', description: 'Modern Python web framework' },
-    { name: 'Node.js', proficiency: 80, category: 'backend', description: 'Server-side JavaScript development' },
-    { name: 'PostgreSQL', proficiency: 75, category: 'backend', description: 'Relational database management' },
-    { name: 'MongoDB', proficiency: 70, category: 'backend', description: 'NoSQL database design' },
-    { name: 'Redis', proficiency: 65, category: 'backend', description: 'In-memory data structure store' },
+    { name: 'Python', proficiency: 85, category: 'backend', description: 'Advanced Python development, data processing, and automation' },
+    { name: 'Node.js', proficiency: 85, category: 'backend', description: 'Advanced server-side JavaScript development' },
+    { name: 'MySQL', proficiency: 95, category: 'backend', description: 'Expert database management with 50M+ row optimization' },
+    { name: 'SQL Server', proficiency: 95, category: 'backend', description: 'Expert SQL Server administration and optimization' },
+    { name: 'Java', proficiency: 70, category: 'backend', description: 'Intermediate Java development' },
+    { name: 'DAX', proficiency: 70, category: 'backend', description: 'Intermediate DAX for data analysis' },
+    { name: 'Shell Scripting', proficiency: 70, category: 'backend', description: 'Intermediate shell scripting and automation' },
 
     // DevOps Skills
-    { name: 'Docker', proficiency: 75, category: 'devops', description: 'Containerization and deployment' },
-    { name: 'Git', proficiency: 90, category: 'devops', description: 'Version control and collaboration' },
-    { name: 'CI/CD', proficiency: 70, category: 'devops', description: 'Continuous integration and deployment' },
-    { name: 'AWS', proficiency: 65, category: 'devops', description: 'Cloud infrastructure and services' },
+    { name: 'Azure CI/CD', proficiency: 85, category: 'devops', description: 'Advanced Azure DevOps pipelines and deployment' },
+    { name: 'DevOps Operations', proficiency: 85, category: 'devops', description: 'Advanced DevOps practices and infrastructure management' },
+    { name: 'AWS', proficiency: 70, category: 'devops', description: 'Intermediate AWS cloud services and infrastructure' },
+    { name: 'LiquiBase', proficiency: 90, category: 'devops', description: 'Expert database deployment and version control' },
 
-    // Mobile Skills
-    { name: 'React Native', proficiency: 75, category: 'mobile', description: 'Cross-platform mobile development' },
-    { name: 'Expo', proficiency: 70, category: 'mobile', description: 'React Native development platform' },
+    // AI & Tools
+    { name: 'AI Development', proficiency: 80, category: 'ai', description: 'Proficient with Cursor, ChatGPT, Kiro, and Co-pilot' },
+    { name: 'LLMs', proficiency: 75, category: 'ai', description: 'Actively exploring large language models and their implications' },
+    { name: 'Tableau', proficiency: 80, category: 'ai', description: 'Advanced data visualization and analytics' },
 
     // Other Skills
-    { name: 'GraphQL', proficiency: 70, category: 'other', description: 'API query language' },
-    { name: 'REST APIs', proficiency: 85, category: 'other', description: 'API design and development' },
-    { name: 'Testing', proficiency: 75, category: 'other', description: 'Unit, integration, and E2E testing' },
+    { name: 'REST APIs', proficiency: 85, category: 'other', description: 'API design and development with TypeScript' },
+    { name: 'XML/JSON', proficiency: 85, category: 'other', description: 'Data transformation and integration' },
+    { name: 'SCRUM/Jira', proficiency: 85, category: 'other', description: 'Enterprise-level agile development' },
   ];
 
   const categories = [
@@ -50,7 +50,7 @@ const Skills: React.FC = () => {
     { id: 'frontend', name: 'Frontend', icon: Palette, color: 'text-green-600' },
     { id: 'backend', name: 'Backend', icon: Server, color: 'text-purple-600' },
     { id: 'devops', name: 'DevOps', icon: Zap, color: 'text-orange-600' },
-    { id: 'mobile', name: 'Mobile', icon: Smartphone, color: 'text-pink-600' },
+    { id: 'ai', name: 'AI & Tools', icon: Brain, color: 'text-pink-600' },
     { id: 'other', name: 'Other', icon: Globe, color: 'text-indigo-600' },
   ];
 
@@ -81,7 +81,8 @@ const Skills: React.FC = () => {
         </h1>
         <p className="text-xl text-secondary-600 dark:text-secondary-400 max-w-3xl mx-auto">
           A comprehensive overview of my technical expertise and proficiency levels
-          across various technologies and frameworks.
+          across various technologies and frameworks, with a focus on database management, 
+          AI integration, and DevOps practices.
         </p>
       </div>
 
@@ -148,7 +149,7 @@ const Skills: React.FC = () => {
         <h2 className="text-3xl font-bold text-secondary-900 dark:text-secondary-100 mb-8 text-center">
           Skills Overview
         </h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {categories.slice(1).map((category) => {
             const categorySkills = skills.filter(skill => skill.category === category.id);
             const avgProficiency = categorySkills.length > 0 
@@ -189,10 +190,10 @@ const Skills: React.FC = () => {
               Currently Learning
             </h3>
             <ul className="space-y-2 text-secondary-600 dark:text-secondary-400">
-              <li>• Rust for systems programming</li>
-              <li>• Machine Learning with Python</li>
-              <li>• Advanced React patterns</li>
-              <li>• Cloud architecture design</li>
+              <li>• Large Language Models (LLMs) and their implications</li>
+              <li>• Advanced AI integration in development workflows</li>
+              <li>• System architecture and design patterns</li>
+              <li>• Advanced React patterns and optimization</li>
             </ul>
           </div>
           <div>
@@ -200,9 +201,9 @@ const Skills: React.FC = () => {
               Learning Goals
             </h3>
             <ul className="space-y-2 text-secondary-600 dark:text-secondary-400">
-              <li>• Master microservices architecture</li>
-              <li>• Deep dive into performance optimization</li>
-              <li>• Explore emerging technologies</li>
+              <li>• Master AI-augmented development practices</li>
+              <li>• Transition to system architecture role</li>
+              <li>• Develop income-generating applications</li>
               <li>• Contribute to open source projects</li>
             </ul>
           </div>

@@ -1,140 +1,82 @@
 import React, { useState } from 'react';
-import { Calendar, MapPin, Building, Users, Award, Code, Database, Globe, Smartphone } from 'lucide-react';
+import { Calendar, MapPin, Building, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface Experience {
-  id: number;
+  id: string;
   title: string;
   company: string;
   location: string;
   duration: string;
-  startDate: string;
-  endDate: string;
   description: string;
-  achievements: string[];
   technologies: string[];
-  icon: React.ComponentType<any>;
-  type: 'full-time' | 'contract' | 'freelance';
+  achievements: string[];
+  isExpanded: boolean;
 }
 
 const Experience: React.FC = () => {
-  const [selectedType, setSelectedType] = useState<string>('all');
-
-  const experiences: Experience[] = [
+  const [experiences, setExperiences] = useState<Experience[]>([
     {
-      id: 1,
-      title: 'Senior Full-Stack Developer',
-      company: 'TechCorp Solutions',
-      location: 'San Francisco, CA',
-      duration: '2022 - Present',
-      startDate: '2022-01',
-      endDate: 'Present',
-      description: 'Leading development of enterprise-scale web applications and mentoring junior developers.',
-      achievements: [
-        'Led a team of 5 developers in building a customer portal serving 100K+ users',
-        'Reduced application load time by 40% through performance optimization',
-        'Implemented CI/CD pipeline reducing deployment time by 60%',
-        'Mentored 3 junior developers and conducted code reviews'
-      ],
-      technologies: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'AWS', 'Docker'],
-      icon: Code,
-      type: 'full-time'
-    },
-    {
-      id: 2,
-      title: 'Full-Stack Developer',
-      company: 'StartupHub Inc',
+      id: '1',
+      title: 'Software Engineering Lead',
+      company: 'Linear B Systems',
       location: 'Remote',
-      duration: '2020 - 2022',
-      startDate: '2020-03',
-      endDate: '2022-01',
-      description: 'Built and maintained multiple client projects with modern web technologies.',
+      duration: 'Oct 2022 - Present',
+      description: 'Leading software engineering initiatives with focus on database management, DevOps operations, and technical architecture.',
+      technologies: ['Node.js', 'TypeScript', 'JavaScript', 'MySQL', 'XML', 'AWS', 'LiquiBase'],
       achievements: [
-        'Developed 15+ client projects from concept to deployment',
-        'Built a real-time collaboration platform with WebSocket integration',
-        'Implemented automated testing achieving 90% code coverage',
-        'Optimized database queries improving performance by 50%'
+        'Manage MySQL database with 50+ million unique rows of data',
+        'Optimize search capabilities and database performance',
+        'Train team members on LiquiBase deployment software',
+        'Support DevOps team in AWS infrastructure management',
+        'Participate in design and planning meetings as technical voice',
+        'Lead database deployments and optimization strategies'
       ],
-      technologies: ['React', 'Python', 'FastAPI', 'MongoDB', 'Redis', 'WebSocket'],
-      icon: Globe,
-      type: 'full-time'
+      isExpanded: false
     },
     {
-      id: 3,
-      title: 'Backend Developer',
-      company: 'Enterprise Systems',
-      location: 'New York, NY',
-      duration: '2018 - 2020',
-      startDate: '2018-06',
-      endDate: '2020-03',
-      description: 'Developed robust backend services and APIs for enterprise applications.',
-      achievements: [
-        'Designed and implemented RESTful APIs serving 1M+ requests daily',
-        'Built microservices architecture improving system scalability',
-        'Implemented comprehensive logging and monitoring systems',
-        'Reduced API response time by 35% through optimization'
-      ],
-      technologies: ['Python', 'Django', 'PostgreSQL', 'Redis', 'Docker', 'Kubernetes'],
-      icon: Database,
-      type: 'full-time'
-    },
-    {
-      id: 4,
-      title: 'Mobile App Developer',
-      company: 'MobileTech Solutions',
-      location: 'Austin, TX',
-      duration: '2017 - 2018',
-      startDate: '2017-09',
-      endDate: '2018-06',
-      description: 'Developed cross-platform mobile applications using React Native.',
-      achievements: [
-        'Built 3 mobile apps with 50K+ combined downloads',
-        'Implemented offline functionality and data synchronization',
-        'Optimized app performance reducing crash rate by 80%',
-        'Integrated payment processing and push notifications'
-      ],
-      technologies: ['React Native', 'Expo', 'Firebase', 'Redux', 'Stripe'],
-      icon: Smartphone,
-      type: 'contract'
-    },
-    {
-      id: 5,
-      title: 'Freelance Web Developer',
-      company: 'Self-Employed',
+      id: '2',
+      title: 'Associate Software Engineer',
+      company: 'Linear B Systems',
       location: 'Remote',
-      duration: '2016 - 2017',
-      startDate: '2016-01',
-      endDate: '2017-09',
-      description: 'Provided web development services to small businesses and startups.',
+      duration: 'Feb 2019 - Mar 2024',
+      description: 'Full-stack development with focus on backend systems, data analytics, and accessibility compliance.',
+      technologies: ['TypeScript', 'MySQL', 'React.js', 'Node.js', 'Tableau', 'Python', 'JSON'],
       achievements: [
-        'Completed 25+ projects for various clients',
-        'Built e-commerce platforms and business websites',
-        'Provided ongoing maintenance and support services',
-        'Established long-term client relationships'
+        'VLM Backend Development: TypeScript API calls and MySQL data manipulation',
+        'VLM Data Analytics: Tableau big data analysis in enterprise SCRUM environment',
+        'Website Spider Project: Developed custom accessibility analysis tool with configurable depth and traversal options',
+        'VA Time and Attendance System: Created 508-compliant training lessons for Department of Veterans Affairs',
+        'Integrated accessibility tools with Ra11yUp compliance analysis application',
+        'Updated courseware for quarterly VATAS releases with Section 508 compliance testing'
       ],
-      technologies: ['JavaScript', 'React', 'Node.js', 'MongoDB', 'Express'],
-      icon: Building,
-      type: 'freelance'
+      isExpanded: false
+    },
+    {
+      id: '3',
+      title: 'Power Platform Development Lead',
+      company: 'Transformative Management Solutions LLC',
+      location: 'Blacksburg, Virginia',
+      duration: 'Mar 2020 - Jan 2022',
+      description: 'Led Power Platform development initiatives with focus on data integration and business intelligence solutions.',
+      technologies: ['Microsoft SQL Server', 'Microsoft Power Platform', 'Microsoft Azure', 'Azure DevOps', 'JSON', 'Power BI', 'Power Apps'],
+      achievements: [
+        'Univision Labor Tracking: Integrated SQL Server & Project Online data using APIs and stored procedures',
+        'Univision Budget Tracking: Established Azure DevOps project and implemented CI/CD pipeline for SQL deployments',
+        'WBS Data Management: Developed Work Breakdown Structure maintenance application with EVM analytics',
+        'College of Performance Management: Designed and deployed new website from requirements to production',
+        'Created comprehensive labor tracking views combining SQL Server, Excel, and Project Online data',
+        'Implemented YAML-based CI/CD pipelines for automated SQL deployments'
+      ],
+      isExpanded: false
     }
-  ];
+  ]);
 
-  const experienceTypes = [
-    { id: 'all', name: 'All Experience', icon: Calendar },
-    { id: 'full-time', name: 'Full-Time', icon: Building },
-    { id: 'contract', name: 'Contract', icon: Users },
-    { id: 'freelance', name: 'Freelance', icon: Award },
-  ];
-
-  const filteredExperiences = selectedType === 'all' 
-    ? experiences 
-    : experiences.filter(exp => exp.type === selectedType);
-
-  const getTypeColor = (type: string) => {
-    switch (type) {
-      case 'full-time': return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300';
-      case 'contract': return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300';
-      case 'freelance': return 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300';
-      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300';
-    }
+  const toggleExpanded = (id: string) => {
+    setExperiences(prev => 
+      prev.map(exp => 
+        exp.id === id ? { ...exp, isExpanded: !exp.isExpanded } : exp
+      )
+    );
   };
 
   return (
@@ -145,144 +87,111 @@ const Experience: React.FC = () => {
           Work <span className="text-primary-600 dark:text-primary-400">Experience</span>
         </h1>
         <p className="text-xl text-secondary-600 dark:text-secondary-400 max-w-3xl mx-auto">
-          My professional journey showcasing diverse roles, achievements, and growth
-          in the technology industry.
+          My professional journey in software engineering, from database management to 
+          AI-augmented development, with a focus on enterprise solutions and technical leadership.
         </p>
-      </div>
-
-      {/* Experience Type Filter */}
-      <div className="mb-12">
-        <div className="flex flex-wrap justify-center gap-4">
-          {experienceTypes.map((type) => (
-            <button
-              key={type.id}
-              onClick={() => setSelectedType(type.id)}
-              className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
-                selectedType === type.id
-                  ? 'bg-primary-600 text-white'
-                  : 'bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:bg-secondary-200 dark:hover:bg-secondary-700'
-              }`}
-            >
-              <type.icon size={20} />
-              <span>{type.name}</span>
-            </button>
-          ))}
-        </div>
       </div>
 
       {/* Experience Timeline */}
       <div className="relative">
         {/* Timeline Line */}
-        <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-secondary-200 dark:bg-secondary-700 hidden lg:block"></div>
-        
-        <div className="space-y-8">
-          {filteredExperiences.map((experience) => (
-            <div key={experience.id} className="relative">
-              {/* Timeline Dot */}
-              <div className="absolute left-6 w-4 h-4 bg-primary-600 dark:bg-primary-400 rounded-full border-4 border-white dark:border-secondary-900 hidden lg:block"></div>
-              
-              <div className="lg:ml-16">
-                <div className="card group hover:shadow-lg transition-shadow duration-300">
-                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-3 mb-2">
-                        <experience.icon className="text-primary-600 dark:text-primary-400" size={24} />
-                        <h3 className="text-2xl font-bold text-secondary-900 dark:text-secondary-100">
-                          {experience.title}
-                        </h3>
-                      </div>
-                      <p className="text-xl text-primary-600 dark:text-primary-400 font-medium mb-1">
-                        {experience.company}
-                      </p>
-                      <div className="flex items-center space-x-4 text-secondary-600 dark:text-secondary-400 mb-3">
-                        <div className="flex items-center space-x-1">
-                          <MapPin size={16} />
-                          <span>{experience.location}</span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <Calendar size={16} />
-                          <span>{experience.duration}</span>
-                        </div>
-                      </div>
+        <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-0.5 h-full bg-primary-200 dark:bg-primary-800"></div>
+
+        {experiences.map((experience, index) => (
+          <div key={experience.id} className={`relative mb-8 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+            {/* Timeline Dot */}
+            <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 bg-primary-600 rounded-full border-4 border-white dark:border-secondary-900"></div>
+
+            {/* Experience Card */}
+            <div className={`ml-12 md:ml-0 md:w-5/12 ${index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'}`}>
+              <div className="card hover:shadow-lg transition-shadow duration-300">
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <h3 className="text-2xl font-bold text-secondary-900 dark:text-secondary-100">
+                      {experience.title}
+                    </h3>
+                    <div className="flex items-center text-primary-600 dark:text-primary-400 font-medium">
+                      <Building size={16} className="mr-2" />
+                      {experience.company}
                     </div>
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${getTypeColor(experience.type)}`}>
-                      {experience.type.replace('-', ' ').toUpperCase()}
-                    </span>
                   </div>
-                  
-                  <p className="text-secondary-600 dark:text-secondary-400 mb-6">
-                    {experience.description}
-                  </p>
-                  
-                  {/* Key Achievements */}
-                  <div className="mb-6">
-                    <h4 className="text-lg font-semibold text-secondary-900 dark:text-secondary-100 mb-3">
-                      Key Achievements
+                  <button
+                    onClick={() => toggleExpanded(experience.id)}
+                    className="text-secondary-500 hover:text-primary-600 transition-colors"
+                  >
+                    {experience.isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  </button>
+                </div>
+
+                <div className="flex items-center text-secondary-600 dark:text-secondary-400 mb-4">
+                  <Calendar size={16} className="mr-2" />
+                  <span className="mr-4">{experience.duration}</span>
+                  <MapPin size={16} className="mr-2" />
+                  <span>{experience.location}</span>
+                </div>
+
+                <p className="text-secondary-700 dark:text-secondary-300 mb-4">
+                  {experience.description}
+                </p>
+
+                {/* Technologies */}
+                <div className="mb-4">
+                  <h4 className="text-sm font-semibold text-secondary-900 dark:text-secondary-100 mb-2">
+                    Technologies Used:
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {experience.technologies.map((tech, techIndex) => (
+                      <span
+                        key={techIndex}
+                        className="px-3 py-1 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 text-sm rounded-full"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Expanded Content */}
+                {experience.isExpanded && (
+                  <div className="border-t border-secondary-200 dark:border-secondary-700 pt-4">
+                    <h4 className="text-sm font-semibold text-secondary-900 dark:text-secondary-100 mb-3">
+                      Key Achievements:
                     </h4>
                     <ul className="space-y-2">
-                      {experience.achievements.map((achievement, idx) => (
-                        <li key={idx} className="flex items-start space-x-2">
-                          <Award size={16} className="text-primary-600 dark:text-primary-400 mt-1 flex-shrink-0" />
-                          <span className="text-secondary-600 dark:text-secondary-400">
+                      {experience.achievements.map((achievement, achievementIndex) => (
+                        <li key={achievementIndex} className="flex items-start">
+                          <span className="text-primary-600 dark:text-primary-400 mr-2 mt-1">•</span>
+                          <span className="text-secondary-700 dark:text-secondary-300 text-sm">
                             {achievement}
                           </span>
                         </li>
                       ))}
                     </ul>
                   </div>
-                  
-                  {/* Technologies */}
-                  <div>
-                    <h4 className="text-lg font-semibold text-secondary-900 dark:text-secondary-100 mb-3">
-                      Technologies Used
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {experience.technologies.map((tech, idx) => (
-                        <span
-                          key={idx}
-                          className="px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm rounded-full"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                )}
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
 
-      {/* Experience Summary */}
+      {/* Career Summary */}
       <div className="mt-16 bg-primary-50 dark:bg-primary-900/20 rounded-lg p-8">
         <h2 className="text-3xl font-bold text-secondary-900 dark:text-secondary-100 mb-6 text-center">
-          Experience Summary
+          Career Summary
         </h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-3 gap-8">
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">
-              {experiences.length}
-            </div>
-            <p className="text-secondary-600 dark:text-secondary-400">Total Positions</p>
+            <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">5+</div>
+            <div className="text-secondary-700 dark:text-secondary-300">Years of Experience</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">
-              7+
-            </div>
-            <p className="text-secondary-600 dark:text-secondary-400">Years Experience</p>
+            <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">50M+</div>
+            <div className="text-secondary-700 dark:text-secondary-300">Database Rows Managed</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">
-              50+
-            </div>
-            <p className="text-secondary-600 dark:text-secondary-400">Projects Completed</p>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">
-              15+
-            </div>
-            <p className="text-secondary-600 dark:text-secondary-400">Technologies</p>
+            <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">3</div>
+            <div className="text-secondary-700 dark:text-secondary-300">Major Projects Led</div>
           </div>
         </div>
       </div>
