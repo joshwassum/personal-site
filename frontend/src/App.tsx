@@ -14,6 +14,7 @@ import AdminBlog from './pages/AdminBlog';
 import AdminBlogCreate from './pages/AdminBlogCreate';
 import AdminBlogEdit from './pages/AdminBlogEdit';
 import AdminNewsletter from './pages/AdminNewsletter';
+import AdminFiles from './pages/AdminFiles';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useDarkMode } from './hooks/useDarkMode';
 
@@ -98,6 +99,13 @@ function App() {
           <ProtectedRoute>
             <AdminLayout>
               <AdminNewsletter />
+            </AdminLayout>
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/files" element={
+          <ProtectedRoute>
+            <AdminLayout>
+              <AdminFiles />
             </AdminLayout>
           </ProtectedRoute>
         } />

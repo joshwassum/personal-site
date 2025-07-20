@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 import uvicorn
 from dotenv import load_dotenv
 import os
@@ -10,6 +11,7 @@ from app.models import Base
 from app.api.auth import router as auth_router
 from app.api.blog import router as blog_router
 from app.api.newsletter import router as newsletter_router
+from app.api.files import router as files_router
 
 # Load environment variables
 load_dotenv()
@@ -28,6 +30,11 @@ Base.metadata.create_all(bind=engine)
 app.include_router(auth_router)
 app.include_router(blog_router)
 app.include_router(newsletter_router)
+app.include_router(files_router)
+
+# Mount static files for uploads
+if os.path.exists("uploads"):
+    app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 # Configure CORS
 app.add_middleware(

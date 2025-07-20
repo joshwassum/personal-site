@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
 from app.models.database import get_db
-from app.dependencies.auth import get_current_admin as get_current_admin_user
+from app.dependencies.auth import get_current_admin
 from app.models.admin import AdminUser
 from app.models.newsletter import Newsletter, NewsletterStatus
 from app.schemas.newsletter import NewsletterCreate, NewsletterUpdate, NewsletterResponse, NewsletterSendRequest
@@ -16,7 +16,7 @@ async def get_newsletters(
     skip: int = 0,
     limit: int = 100,
     db: Session = Depends(get_db),
-    current_user: AdminUser = Depends(get_current_admin_user)
+    current_user: AdminUser = Depends(get_current_admin)
 ):
     """Get all newsletters with pagination"""
     newsletters = db.query(Newsletter).offset(skip).limit(limit).all()
@@ -26,7 +26,7 @@ async def get_newsletters(
 async def get_newsletter(
     newsletter_id: str,
     db: Session = Depends(get_db),
-    current_user: AdminUser = Depends(get_current_admin_user)
+    current_user: AdminUser = Depends(get_current_admin)
 ):
     """Get a specific newsletter by ID"""
     newsletter = db.query(Newsletter).filter(Newsletter.id == newsletter_id).first()
@@ -41,7 +41,7 @@ async def get_newsletter(
 async def create_newsletter(
     newsletter_data: NewsletterCreate,
     db: Session = Depends(get_db),
-    current_user: AdminUser = Depends(get_current_admin_user)
+    current_user: AdminUser = Depends(get_current_admin)
 ):
     """Create a new newsletter"""
     db_newsletter = Newsletter(
@@ -63,7 +63,7 @@ async def update_newsletter(
     newsletter_id: str,
     newsletter_data: NewsletterUpdate,
     db: Session = Depends(get_db),
-    current_user: AdminUser = Depends(get_current_admin_user)
+    current_user: AdminUser = Depends(get_current_admin)
 ):
     """Update an existing newsletter"""
     db_newsletter = db.query(Newsletter).filter(Newsletter.id == newsletter_id).first()
@@ -86,7 +86,7 @@ async def update_newsletter(
 async def delete_newsletter(
     newsletter_id: str,
     db: Session = Depends(get_db),
-    current_user: AdminUser = Depends(get_current_admin_user)
+    current_user: AdminUser = Depends(get_current_admin)
 ):
     """Delete a newsletter"""
     db_newsletter = db.query(Newsletter).filter(Newsletter.id == newsletter_id).first()
@@ -106,7 +106,7 @@ async def send_newsletter(
     newsletter_id: str,
     send_request: NewsletterSendRequest,
     db: Session = Depends(get_db),
-    current_user: AdminUser = Depends(get_current_admin_user)
+    current_user: AdminUser = Depends(get_current_admin)
 ):
     """Send a newsletter"""
     db_newsletter = db.query(Newsletter).filter(Newsletter.id == newsletter_id).first()

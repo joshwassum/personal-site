@@ -30,6 +30,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     { name: 'Dashboard', href: '/admin/dashboard', icon: '📊' },
     { name: 'Blog Posts', href: '/admin/blog', icon: '📝' },
     { name: 'Newsletters', href: '/admin/newsletters', icon: '📧' },
+    { name: 'Files', href: '/admin/files', icon: '📁' },
     { name: 'Contact Messages', href: '/admin/contact', icon: '💬' },
     { name: 'Section Visibility', href: '/admin/sections', icon: '👁️' },
     { name: 'Settings', href: '/admin/settings', icon: '⚙️' },

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
 from app.models.database import get_db
-from app.dependencies.auth import get_current_admin as get_current_admin_user
+from app.dependencies.auth import get_current_admin
 from app.models.admin import AdminUser
 from app.models.blog import BlogPost
 from app.schemas.blog import BlogPostCreate, BlogPostUpdate, BlogPostResponse
@@ -16,7 +16,7 @@ async def get_blog_posts(
     skip: int = 0,
     limit: int = 100,
     db: Session = Depends(get_db),
-    current_user: AdminUser = Depends(get_current_admin_user)
+    current_user: AdminUser = Depends(get_current_admin)
 ):
     """Get all blog posts with pagination"""
     posts = db.query(BlogPost).offset(skip).limit(limit).all()
@@ -26,7 +26,7 @@ async def get_blog_posts(
 async def get_blog_post(
     post_id: str,
     db: Session = Depends(get_db),
-    current_user: AdminUser = Depends(get_current_admin_user)
+    current_user: AdminUser = Depends(get_current_admin)
 ):
     """Get a specific blog post by ID"""
     post = db.query(BlogPost).filter(BlogPost.id == post_id).first()
@@ -41,7 +41,7 @@ async def get_blog_post(
 async def create_blog_post(
     post_data: BlogPostCreate,
     db: Session = Depends(get_db),
-    current_user: AdminUser = Depends(get_current_admin_user)
+    current_user: AdminUser = Depends(get_current_admin)
 ):
     """Create a new blog post"""
     # Check if slug already exists
@@ -75,7 +75,7 @@ async def update_blog_post(
     post_id: str,
     post_data: BlogPostUpdate,
     db: Session = Depends(get_db),
-    current_user: AdminUser = Depends(get_current_admin_user)
+    current_user: AdminUser = Depends(get_current_admin)
 ):
     """Update an existing blog post"""
     db_post = db.query(BlogPost).filter(BlogPost.id == post_id).first()
@@ -112,7 +112,7 @@ async def update_blog_post(
 async def delete_blog_post(
     post_id: str,
     db: Session = Depends(get_db),
-    current_user: AdminUser = Depends(get_current_admin_user)
+    current_user: AdminUser = Depends(get_current_admin)
 ):
     """Delete a blog post"""
     db_post = db.query(BlogPost).filter(BlogPost.id == post_id).first()
@@ -131,7 +131,7 @@ async def delete_blog_post(
 async def toggle_blog_post_publish(
     post_id: str,
     db: Session = Depends(get_db),
-    current_user: AdminUser = Depends(get_current_admin_user)
+    current_user: AdminUser = Depends(get_current_admin)
 ):
     """Toggle the published status of a blog post"""
     db_post = db.query(BlogPost).filter(BlogPost.id == post_id).first()
