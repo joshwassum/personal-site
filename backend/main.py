@@ -9,6 +9,7 @@ from app.models.database import engine
 from app.models import Base
 from app.api.auth import router as auth_router
 from app.api.blog import router as blog_router
+from app.api.newsletter import router as newsletter_router
 
 # Load environment variables
 load_dotenv()
@@ -26,6 +27,7 @@ Base.metadata.create_all(bind=engine)
 # Include routers
 app.include_router(auth_router)
 app.include_router(blog_router)
+app.include_router(newsletter_router)
 
 # Configure CORS
 app.add_middleware(

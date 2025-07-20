@@ -13,6 +13,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminBlog from './pages/AdminBlog';
 import AdminBlogCreate from './pages/AdminBlogCreate';
 import AdminBlogEdit from './pages/AdminBlogEdit';
+import AdminNewsletter from './pages/AdminNewsletter';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useDarkMode } from './hooks/useDarkMode';
 
@@ -96,10 +97,7 @@ function App() {
         <Route path="/admin/newsletters" element={
           <ProtectedRoute>
             <AdminLayout>
-              <div className="text-center py-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">Newsletter Management</h2>
-                <p className="text-gray-600">Newsletter management coming soon...</p>
-              </div>
+              <AdminNewsletter />
             </AdminLayout>
           </ProtectedRoute>
         } />
