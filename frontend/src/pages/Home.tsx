@@ -4,24 +4,6 @@ import { ArrowRight, Code, Database, Globe } from 'lucide-react';
 import SectionWrapper from '../components/SectionWrapper';
 
 const Home: React.FC = () => {
-  const features = [
-    {
-      icon: Code,
-      title: 'Frontend Development',
-      description: 'Modern React applications with TypeScript and responsive design.',
-    },
-    {
-      icon: Database,
-      title: 'Backend Development',
-      description: 'Robust Python APIs with FastAPI and database management.',
-    },
-    {
-      icon: Globe,
-      title: 'Full-Stack Solutions',
-      description: 'End-to-end web applications from concept to deployment.',
-    },
-  ];
-
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Hero Section */}

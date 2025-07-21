@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExternalLink, Github, Filter, Code, Database, Brain } from 'lucide-react';
+import { ExternalLink, Github, Code, Database, Brain } from 'lucide-react';
 
 interface Project {
   id: string;
@@ -88,24 +88,6 @@ const Portfolio: React.FC = () => {
     const statusMatch = selectedStatus === 'all' || project.status === selectedStatus;
     return categoryMatch && statusMatch;
   });
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'completed': return 'text-green-600 dark:text-green-400';
-      case 'in-progress': return 'text-yellow-600 dark:text-yellow-400';
-      case 'planned': return 'text-blue-600 dark:text-blue-400';
-      default: return 'text-secondary-600 dark:text-secondary-400';
-    }
-  };
-
-  const getStatusLabel = (status: string) => {
-    switch (status) {
-      case 'completed': return 'Completed';
-      case 'in-progress': return 'In Progress';
-      case 'planned': return 'Planned';
-      default: return status;
-    }
-  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" role="main" id="main-content">

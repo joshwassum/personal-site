@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, MapPin, GraduationCap, Award, Heart, Code, Database, Brain, ExternalLink } from 'lucide-react';
+import { GraduationCap, Award, Heart, Code, Database, Brain, ExternalLink } from 'lucide-react';
 
 const About: React.FC = () => {
   return (
