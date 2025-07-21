@@ -1,5 +1,6 @@
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -23,13 +24,19 @@ import ProtectedRoute from './components/ProtectedRoute';
 import { useDarkMode } from './hooks/useDarkMode';
 import { SectionVisibilityProvider } from './contexts/SectionVisibilityContext';
 
-function App() {
-  const { darkMode, toggleDarkMode } = useDarkMode();
-
+function AnimatedRoutes({ darkMode, toggleDarkMode }: { darkMode: boolean, toggleDarkMode: () => void }) {
+  const location = useLocation();
   return (
-    <SectionVisibilityProvider>
-      <Router>
-        <Routes>
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -16 }}
+        transition={{ duration: 0.25, ease: 'easeInOut' }}
+        style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}
+      >
+        <Routes location={location}>
           {/* Public Routes */}
           <Route path="/" element={
             <Layout darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
@@ -74,7 +81,6 @@ function App() {
 
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
-          
           {/* Protected Admin Routes */}
           <Route path="/admin" element={
             <ProtectedRoute>
@@ -150,6 +156,17 @@ function App() {
             </ProtectedRoute>
           } />
         </Routes>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+function App() {
+  const { darkMode, toggleDarkMode } = useDarkMode();
+  return (
+    <SectionVisibilityProvider>
+      <Router>
+        <AnimatedRoutes darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       </Router>
     </SectionVisibilityProvider>
   );

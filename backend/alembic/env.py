@@ -21,7 +21,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from app.models.database import Base
-from app.models import AdminUser, BlogPost, Newsletter, ContactSubmission, SectionVisibility
+from app.models import AdminUser, BlogPost, Newsletter, SectionVisibility
 
 target_metadata = Base.metadata
 

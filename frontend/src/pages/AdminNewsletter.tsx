@@ -158,14 +158,14 @@ const AdminNewsletter: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+      <div className="flex items-center justify-center h-64" role="status" aria-live="polite">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600" aria-hidden="true"></div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" role="main" id="main-content">
       {/* Header */}
       <div className="flex justify-between items-center mb-8">
         <div>
@@ -180,7 +180,7 @@ const AdminNewsletter: React.FC = () => {
           onClick={() => setShowCreateModal(true)}
           className="btn-primary flex items-center gap-2"
         >
-          <Plus size={20} />
+          <Plus size={20} aria-hidden="true" />
           Create Newsletter
         </button>
       </div>
@@ -190,13 +190,14 @@ const AdminNewsletter: React.FC = () => {
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-400" size={20} />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-400" size={20} aria-hidden="true" />
               <input
                 type="text"
                 placeholder="Search newsletters..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-secondary-300 dark:border-secondary-600 rounded-lg bg-white dark:bg-secondary-800 text-secondary-900 dark:text-secondary-100"
+                aria-label="Search newsletters"
               />
             </div>
           </div>
@@ -205,6 +206,7 @@ const AdminNewsletter: React.FC = () => {
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as 'all' | 'draft' | 'sent')}
               className="px-4 py-2 border border-secondary-300 dark:border-secondary-600 rounded-lg bg-white dark:bg-secondary-800 text-secondary-900 dark:text-secondary-100"
+              aria-label="Filter newsletters by status"
             >
               <option value="all">All Status</option>
               <option value="draft">Draft</option>
@@ -217,22 +219,22 @@ const AdminNewsletter: React.FC = () => {
       {/* Newsletter List */}
       <div className="card">
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full" aria-label="Newsletter list">
             <thead>
               <tr className="border-b border-secondary-200 dark:border-secondary-700">
-                <th className="text-left py-3 px-4 font-semibold text-secondary-900 dark:text-secondary-100">
+                <th className="text-left py-3 px-4 font-semibold text-secondary-900 dark:text-secondary-100" scope="col">
                   Subject
                 </th>
-                <th className="text-left py-3 px-4 font-semibold text-secondary-900 dark:text-secondary-100">
+                <th className="text-left py-3 px-4 font-semibold text-secondary-900 dark:text-secondary-100" scope="col">
                   Status
                 </th>
-                <th className="text-left py-3 px-4 font-semibold text-secondary-900 dark:text-secondary-100">
+                <th className="text-left py-3 px-4 font-semibold text-secondary-900 dark:text-secondary-100" scope="col">
                   Created
                 </th>
-                <th className="text-left py-3 px-4 font-semibold text-secondary-900 dark:text-secondary-100">
+                <th className="text-left py-3 px-4 font-semibold text-secondary-900 dark:text-secondary-100" scope="col">
                   Sent
                 </th>
-                <th className="text-right py-3 px-4 font-semibold text-secondary-900 dark:text-secondary-100">
+                <th className="text-right py-3 px-4 font-semibold text-secondary-900 dark:text-secondary-100" scope="col">
                   Actions
                 </th>
               </tr>
@@ -271,24 +273,27 @@ const AdminNewsletter: React.FC = () => {
                         onClick={() => openEditModal(newsletter)}
                         className="p-2 text-secondary-600 dark:text-secondary-400 hover:text-primary-600 dark:hover:text-primary-400"
                         title="Edit"
+                        aria-label={`Edit newsletter: ${newsletter.subject}`}
                       >
-                        <Edit size={16} />
+                        <Edit size={16} aria-hidden="true" />
                       </button>
                       {newsletter.status === 'draft' && (
                         <button
                           onClick={() => handleSendNewsletter(newsletter.id)}
                           className="p-2 text-secondary-600 dark:text-secondary-400 hover:text-green-600 dark:hover:text-green-400"
                           title="Send"
+                          aria-label={`Send newsletter: ${newsletter.subject}`}
                         >
-                          <Send size={16} />
+                          <Send size={16} aria-hidden="true" />
                         </button>
                       )}
                       <button
                         onClick={() => handleDeleteNewsletter(newsletter.id)}
                         className="p-2 text-secondary-600 dark:text-secondary-400 hover:text-red-600 dark:hover:text-red-400"
                         title="Delete"
+                        aria-label={`Delete newsletter: ${newsletter.subject}`}
                       >
-                        <Trash2 size={16} />
+                        <Trash2 size={16} aria-hidden="true" />
                       </button>
                     </div>
                   </td>
@@ -299,7 +304,7 @@ const AdminNewsletter: React.FC = () => {
         </div>
 
         {filteredNewsletters.length === 0 && (
-          <div className="text-center py-8">
+          <div className="text-center py-8" aria-live="polite">
             <p className="text-secondary-500 dark:text-secondary-400">
               No newsletters found
             </p>
@@ -309,9 +314,9 @@ const AdminNewsletter: React.FC = () => {
 
       {/* Create Modal */}
       {showCreateModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" role="dialog" aria-modal="true" aria-labelledby="create-newsletter-heading">
           <div className="bg-white dark:bg-secondary-800 rounded-lg p-6 w-full max-w-2xl mx-4">
-            <h2 className="text-2xl font-bold text-secondary-900 dark:text-secondary-100 mb-4">
+            <h2 id="create-newsletter-heading" className="text-2xl font-bold text-secondary-900 dark:text-secondary-100 mb-4">
               Create Newsletter
             </h2>
             <form onSubmit={handleCreateNewsletter}>
@@ -326,6 +331,7 @@ const AdminNewsletter: React.FC = () => {
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     className="w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-lg bg-white dark:bg-secondary-800 text-secondary-900 dark:text-secondary-100"
                     required
+                    autoFocus
                   />
                 </div>
                 <div>
@@ -360,9 +366,9 @@ const AdminNewsletter: React.FC = () => {
 
       {/* Edit Modal */}
       {showEditModal && selectedNewsletter && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" role="dialog" aria-modal="true" aria-labelledby="edit-newsletter-heading">
           <div className="bg-white dark:bg-secondary-800 rounded-lg p-6 w-full max-w-2xl mx-4">
-            <h2 className="text-2xl font-bold text-secondary-900 dark:text-secondary-100 mb-4">
+            <h2 id="edit-newsletter-heading" className="text-2xl font-bold text-secondary-900 dark:text-secondary-100 mb-4">
               Edit Newsletter
             </h2>
             <form onSubmit={handleUpdateNewsletter}>
@@ -377,6 +383,7 @@ const AdminNewsletter: React.FC = () => {
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     className="w-full px-3 py-2 border border-secondary-300 dark:border-secondary-600 rounded-lg bg-white dark:bg-secondary-800 text-secondary-900 dark:text-secondary-100"
                     required
+                    autoFocus
                   />
                 </div>
                 <div>

@@ -100,7 +100,7 @@ const Portfolio: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" role="main" id="main-content">
       {/* Hero Section */}
       <div className="text-center mb-16">
         <h1 className="text-4xl md:text-6xl font-bold text-secondary-900 dark:text-secondary-100 mb-6">
@@ -114,27 +114,29 @@ const Portfolio: React.FC = () => {
 
       {/* Filters */}
       <div className="mb-12">
-        <div className="flex flex-wrap justify-center gap-4 mb-6">
+        <div className="flex flex-wrap justify-center gap-4 mb-6" aria-label="Project category filters">
           {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
+              aria-pressed={selectedCategory === category.id}
               className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 selectedCategory === category.id
                   ? 'bg-primary-600 text-white'
                   : 'bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 hover:bg-secondary-200 dark:hover:bg-secondary-700'
               }`}
             >
-              <category.icon size={20} />
+              <category.icon size={20} aria-hidden="true" />
               <span>{category.name}</span>
             </button>
           ))}
         </div>
-        <div className="flex flex-wrap justify-center gap-4">
+        <div className="flex flex-wrap justify-center gap-4" aria-label="Project status filters">
           {statuses.map((status) => (
             <button
               key={status.id}
               onClick={() => setSelectedStatus(status.id)}
+              aria-pressed={selectedStatus === status.id}
               className={`px-4 py-2 rounded-lg font-medium transition-colors duration-200 ${
                 selectedStatus === status.id
                   ? 'bg-primary-600 text-white'
@@ -149,15 +151,15 @@ const Portfolio: React.FC = () => {
 
       {/* Featured Projects */}
       {filteredProjects.filter(p => p.featured).length > 0 && (
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-secondary-900 dark:text-secondary-100 mb-8 text-center">
+        <section className="mb-16" aria-labelledby="featured-projects-heading">
+          <h2 id="featured-projects-heading" className="text-3xl font-bold text-secondary-900 dark:text-secondary-100 mb-8 text-center">
             Featured Projects
           </h2>
           <div className="grid lg:grid-cols-2 gap-8">
             {filteredProjects
               .filter(project => project.featured)
               .map((project) => (
-                <div key={project.id} className="card group hover:shadow-xl transition-shadow duration-300">
+                <article key={project.id} className="card group hover:shadow-xl transition-shadow duration-300" aria-labelledby={`project-title-${project.id}`}> 
                   <div className="relative overflow-hidden rounded-lg mb-6">
                     <img
                       src={project.image}
@@ -171,7 +173,7 @@ const Portfolio: React.FC = () => {
                     </div>
                   </div>
                   
-                  <h3 className="text-2xl font-bold text-secondary-900 dark:text-secondary-100 mb-3">
+                  <h3 id={`project-title-${project.id}`} className="text-2xl font-bold text-secondary-900 dark:text-secondary-100 mb-3">
                     {project.title}
                   </h3>
                   
@@ -197,8 +199,9 @@ const Portfolio: React.FC = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center space-x-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
+                        aria-label={`GitHub repository for ${project.title}`}
                       >
-                        <Github size={20} />
+                        <Github size={20} aria-hidden="true" />
                         <span>GitHub</span>
                       </a>
                     )}
@@ -208,26 +211,27 @@ const Portfolio: React.FC = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center space-x-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
+                        aria-label={`Live demo for ${project.title}`}
                       >
-                        <ExternalLink size={20} />
+                        <ExternalLink size={20} aria-hidden="true" />
                         <span>Live Demo</span>
                       </a>
                     )}
                   </div>
-                </div>
+                </article>
               ))}
           </div>
-        </div>
+        </section>
       )}
 
       {/* All Projects */}
-      <div>
-        <h2 className="text-3xl font-bold text-secondary-900 dark:text-secondary-100 mb-8 text-center">
+      <section aria-labelledby="all-projects-heading">
+        <h2 id="all-projects-heading" className="text-3xl font-bold text-secondary-900 dark:text-secondary-100 mb-8 text-center">
           All Projects
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project) => (
-            <div key={project.id} className="card group hover:shadow-lg transition-shadow duration-300">
+            <article key={project.id} className="card group hover:shadow-lg transition-shadow duration-300" aria-labelledby={`project-title-${project.id}`}> 
               <div className="relative overflow-hidden rounded-lg mb-4">
                 <img
                   src={project.image}
@@ -241,7 +245,7 @@ const Portfolio: React.FC = () => {
                 </div>
               </div>
               
-              <h3 className="text-xl font-bold text-secondary-900 dark:text-secondary-100 mb-2">
+              <h3 id={`project-title-${project.id}`} className="text-xl font-bold text-secondary-900 dark:text-secondary-100 mb-2">
                 {project.title}
               </h3>
               
@@ -272,8 +276,9 @@ const Portfolio: React.FC = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center space-x-1 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors text-sm"
+                    aria-label={`GitHub repository for ${project.title}`}
                   >
-                    <Github size={16} />
+                    <Github size={16} aria-hidden="true" />
                     <span>GitHub</span>
                   </a>
                 )}
@@ -283,19 +288,20 @@ const Portfolio: React.FC = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center space-x-1 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors text-sm"
+                    aria-label={`Live demo for ${project.title}`}
                   >
-                    <ExternalLink size={16} />
+                    <ExternalLink size={16} aria-hidden="true" />
                     <span>Demo</span>
                   </a>
                 )}
               </div>
-            </div>
+            </article>
           ))}
         </div>
-      </div>
+      </section>
 
       {/* Project Stats */}
-      <div className="mt-16 bg-primary-50 dark:bg-primary-900/20 rounded-lg p-8">
+      <div className="mt-16 bg-primary-50 dark:bg-primary-900/20 rounded-lg p-8" aria-live="polite">
         <h2 className="text-3xl font-bold text-secondary-900 dark:text-secondary-100 mb-8 text-center">
           Project Statistics
         </h2>

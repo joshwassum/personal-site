@@ -97,7 +97,7 @@ const Contact: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Hero Section */}
       <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-6xl font-bold text-secondary-900 dark:text-secondary-100 mb-6">
+        <h1 id="contact-heading" className="text-4xl md:text-6xl font-bold text-secondary-900 dark:text-secondary-100 mb-6">
           Get In <span className="text-primary-600 dark:text-primary-400">Touch</span>
         </h1>
         <p className="text-xl text-secondary-600 dark:text-secondary-400 max-w-3xl mx-auto">
@@ -115,8 +115,8 @@ const Contact: React.FC = () => {
 
           {/* Success/Error Messages */}
           {submitStatus === 'success' && (
-            <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg flex items-center space-x-2">
-              <CheckCircle className="text-green-600 dark:text-green-400" size={20} />
+            <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg flex items-center space-x-2" aria-live="polite">
+              <CheckCircle className="text-green-600 dark:text-green-400" size={20} aria-hidden="true" />
               <span className="text-green-800 dark:text-green-200">
                 Message sent successfully! I'll get back to you soon.
               </span>
@@ -124,15 +124,15 @@ const Contact: React.FC = () => {
           )}
 
           {submitStatus === 'error' && (
-            <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-center space-x-2">
-              <AlertCircle className="text-red-600 dark:text-red-400" size={20} />
+            <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-center space-x-2" aria-live="polite">
+              <AlertCircle className="text-red-600 dark:text-red-400" size={20} aria-hidden="true" />
               <span className="text-red-800 dark:text-red-200">
                 Something went wrong. Please try again.
               </span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" role="form" aria-labelledby="contact-heading">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-2">
                 Name
@@ -141,6 +141,8 @@ const Contact: React.FC = () => {
                 {...register('name')}
                 type="text"
                 id="name"
+                aria-invalid={!!errors.name}
+                aria-describedby={errors.name ? 'name-error' : undefined}
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors duration-200 ${
                   errors.name
                     ? 'border-red-300 dark:border-red-600 bg-red-50 dark:bg-red-900/20'
@@ -149,7 +151,7 @@ const Contact: React.FC = () => {
                 placeholder="Your name"
               />
               {errors.name && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p id="name-error" className="mt-1 text-sm text-red-600 dark:text-red-400">
                   {errors.name.message}
                 </p>
               )}
@@ -163,6 +165,8 @@ const Contact: React.FC = () => {
                 {...register('email')}
                 type="email"
                 id="email"
+                aria-invalid={!!errors.email}
+                aria-describedby={errors.email ? 'email-error' : undefined}
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors duration-200 ${
                   errors.email
                     ? 'border-red-300 dark:border-red-600 bg-red-50 dark:bg-red-900/20'
@@ -171,7 +175,7 @@ const Contact: React.FC = () => {
                 placeholder="your.email@example.com"
               />
               {errors.email && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p id="email-error" className="mt-1 text-sm text-red-600 dark:text-red-400">
                   {errors.email.message}
                 </p>
               )}
@@ -185,6 +189,8 @@ const Contact: React.FC = () => {
                 {...register('subject')}
                 type="text"
                 id="subject"
+                aria-invalid={!!errors.subject}
+                aria-describedby={errors.subject ? 'subject-error' : undefined}
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors duration-200 ${
                   errors.subject
                     ? 'border-red-300 dark:border-red-600 bg-red-50 dark:bg-red-900/20'
@@ -193,7 +199,7 @@ const Contact: React.FC = () => {
                 placeholder="What's this about?"
               />
               {errors.subject && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p id="subject-error" className="mt-1 text-sm text-red-600 dark:text-red-400">
                   {errors.subject.message}
                 </p>
               )}
@@ -207,6 +213,8 @@ const Contact: React.FC = () => {
                 {...register('message')}
                 id="message"
                 rows={6}
+                aria-invalid={!!errors.message}
+                aria-describedby={errors.message ? 'message-error' : undefined}
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors duration-200 resize-none ${
                   errors.message
                     ? 'border-red-300 dark:border-red-600 bg-red-50 dark:bg-red-900/20'
@@ -215,7 +223,7 @@ const Contact: React.FC = () => {
                 placeholder="Tell me about your project or opportunity..."
               />
               {errors.message && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p id="message-error" className="mt-1 text-sm text-red-600 dark:text-red-400">
                   {errors.message.message}
                 </p>
               )}
@@ -228,12 +236,12 @@ const Contact: React.FC = () => {
             >
               {isSubmitting ? (
                 <>
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" aria-hidden="true"></div>
                   <span>Sending...</span>
                 </>
               ) : (
                 <>
-                  <Send size={20} />
+                  <Send size={20} aria-hidden="true" />
                   <span>Send Message</span>
                 </>
               )}
@@ -251,7 +259,7 @@ const Contact: React.FC = () => {
               {contactInfo.map((info, index) => (
                 <div key={index} className="flex items-center space-x-4">
                   <div className="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
-                    <info.icon className="text-primary-600 dark:text-primary-400" size={24} />
+                    <info.icon className="text-primary-600 dark:text-primary-400" size={24} aria-hidden="true" />
                   </div>
                   <div>
                     <h3 className="font-medium text-secondary-900 dark:text-secondary-100">
@@ -261,6 +269,7 @@ const Contact: React.FC = () => {
                       <a
                         href={info.link}
                         className="text-secondary-600 dark:text-secondary-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
+                        aria-label={info.title + ': ' + info.value}
                       >
                         {info.value}
                       </a>
@@ -290,7 +299,7 @@ const Contact: React.FC = () => {
                   className={`w-12 h-12 bg-secondary-100 dark:bg-secondary-800 rounded-lg flex items-center justify-center text-secondary-600 dark:text-secondary-400 transition-colors duration-200 ${social.color}`}
                   aria-label={social.name}
                 >
-                  <social.icon size={24} />
+                  <social.icon size={24} aria-hidden="true" />
                 </a>
               ))}
             </div>
