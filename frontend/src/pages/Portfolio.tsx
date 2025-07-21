@@ -23,41 +23,49 @@ const Portfolio: React.FC = () => {
       id: '1',
       title: 'MTGA AI Assistant',
       description: 'AI-powered Magic: The Gathering Arena companion app and website that provides personalized collection management advice with a focus on individuality and anti-netdecking strategies.',
-      image: '/api/placeholder/600/400',
+      image: '', // removed
       technologies: ['Python', 'React', 'Vite', 'AI Integration', 'TypeScript'],
       category: 'ai',
       status: 'in-progress',
       featured: true
+      // githubUrl: '',
+      // liveUrl: '',
     },
     {
       id: '2',
       title: 'Web Crawler - Accessibility Analysis',
       description: 'Custom Python-based web crawler that parses websites to identify accessible and inaccessible pages, with configurable depth and traversal options for comprehensive accessibility analysis.',
-      image: '/api/placeholder/600/400',
+      image: '', // removed
       technologies: ['Python', 'Web Scraping', 'Accessibility', 'Data Analysis'],
       category: 'backend',
       status: 'completed',
       featured: true
+      // githubUrl: '',
+      // liveUrl: '',
     },
     {
       id: '3',
       title: 'XML to JSON Converter',
       description: 'Python utility tool designed to facilitate specific data conversion needs between XML and JSON formats, streamlining data transformation workflows.',
-      image: '/api/placeholder/600/400',
+      image: '', // removed
       technologies: ['Python', 'Data Transformation', 'XML', 'JSON'],
       category: 'backend',
       status: 'completed',
       featured: false
+      // githubUrl: '',
+      // liveUrl: '',
     },
     {
       id: '4',
       title: 'Personal Website',
       description: 'Modern portfolio website built with React, TypeScript, and FastAPI, featuring admin authentication, blog management, and AI-augmented development practices.',
-      image: '/api/placeholder/600/400',
+      image: '', // removed
       technologies: ['React', 'TypeScript', 'FastAPI', 'Python', 'Tailwind CSS'],
       category: 'frontend',
       status: 'completed',
-      featured: true
+      featured: true,
+      githubUrl: 'https://github.com/joshwassum/personal-site',
+      // liveUrl: '',
     }
   ];
 
@@ -160,18 +168,6 @@ const Portfolio: React.FC = () => {
               .filter(project => project.featured)
               .map((project) => (
                 <article key={project.id} className="card group hover:shadow-xl transition-shadow duration-300" aria-labelledby={`project-title-${project.id}`}> 
-                  <div className="relative overflow-hidden rounded-lg mb-6">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute top-4 right-4">
-                      <span className={`px-3 py-1 rounded-full text-sm font-medium bg-white/90 dark:bg-secondary-900/90 ${getStatusColor(project.status)}`}>
-                        {getStatusLabel(project.status)}
-                      </span>
-                    </div>
-                  </div>
                   
                   <h3 id={`project-title-${project.id}`} className="text-2xl font-bold text-secondary-900 dark:text-secondary-100 mb-3">
                     {project.title}
@@ -232,18 +228,6 @@ const Portfolio: React.FC = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project) => (
             <article key={project.id} className="card group hover:shadow-lg transition-shadow duration-300" aria-labelledby={`project-title-${project.id}`}> 
-              <div className="relative overflow-hidden rounded-lg mb-4">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute top-2 right-2">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium bg-white/90 dark:bg-secondary-900/90 ${getStatusColor(project.status)}`}>
-                    {getStatusLabel(project.status)}
-                  </span>
-                </div>
-              </div>
               
               <h3 id={`project-title-${project.id}`} className="text-xl font-bold text-secondary-900 dark:text-secondary-100 mb-2">
                 {project.title}
