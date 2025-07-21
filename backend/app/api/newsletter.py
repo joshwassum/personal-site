@@ -116,7 +116,7 @@ async def send_newsletter(
             detail="Newsletter not found"
         )
     
-    if db_newsletter.status == NewsletterStatus.SENT:
+    if db_newsletter.status == NewsletterStatus.SENT:  # type: ignore
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Newsletter has already been sent"
@@ -124,8 +124,8 @@ async def send_newsletter(
     
     # TODO: Implement actual email sending logic
     # For now, just update the status
-    db_newsletter.status = NewsletterStatus.SENT
-    db_newsletter.sent_at = datetime.utcnow()
+    db_newsletter.status = NewsletterStatus.SENT  # type: ignore
+    db_newsletter.sent_at = datetime.utcnow()  # type: ignore
     
     db.commit()
     db.refresh(db_newsletter)

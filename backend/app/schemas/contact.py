@@ -1,26 +1,31 @@
 from pydantic import BaseModel, EmailStr
 from typing import Optional
 from datetime import datetime
-from app.models.contact import SubmissionStatus
 
-class ContactSubmissionBase(BaseModel):
+class ContactMessageCreate(BaseModel):
     name: str
     email: EmailStr
     subject: str
     message: str
 
-class ContactSubmissionCreate(ContactSubmissionBase):
-    pass
+class ContactMessageUpdate(BaseModel):
+    is_read: bool
 
-class ContactSubmissionResponse(ContactSubmissionBase):
+class ContactMessageResponse(BaseModel):
     id: str
-    status: SubmissionStatus
-    submitted_at: datetime
+    name: str
+    email: str
+    subject: str
+    message: str
+    created_at: datetime
+    is_read: bool
     ip_address: Optional[str] = None
     user_agent: Optional[str] = None
 
     class Config:
         from_attributes = True
 
-class ContactSubmissionUpdate(BaseModel):
-    status: SubmissionStatus 
+class ContactMessageList(BaseModel):
+    messages: list[ContactMessageResponse]
+    total: int
+    unread_count: int 

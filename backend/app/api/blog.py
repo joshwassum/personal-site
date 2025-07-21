@@ -4,7 +4,7 @@ from typing import List
 from app.models.database import get_db
 from app.dependencies.auth import get_current_admin
 from app.models.admin import AdminUser
-from app.models.blog import BlogPost
+from app.models.blog import BlogPost, PostStatus
 from app.schemas.blog import BlogPostCreate, BlogPostUpdate, BlogPostResponse
 from datetime import datetime
 import uuid
@@ -44,8 +44,14 @@ async def create_blog_post(
     current_user: AdminUser = Depends(get_current_admin)
 ):
     """Create a new blog post"""
+    # Generate slug from title if not provided
+    slug = post_data.title.lower().replace(" ", "-").replace("_", "-")
+    # Remove special characters
+    import re
+    slug = re.sub(r'[^a-z0-9\-]', '', slug)
+    
     # Check if slug already exists
-    existing_post = db.query(BlogPost).filter(BlogPost.slug == post_data.slug).first()
+    existing_post = db.query(BlogPost).filter(BlogPost.slug == slug).first()
     if existing_post:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -54,14 +60,12 @@ async def create_blog_post(
     
     # Create new blog post
     db_post = BlogPost(
-        id=str(uuid.uuid4()),
         title=post_data.title,
-        slug=post_data.slug,
+        slug=slug,
         excerpt=post_data.excerpt,
         content=post_data.content,
-        is_published=post_data.is_published,
-        created_at=datetime.utcnow(),
-        updated_at=datetime.utcnow()
+        status=post_data.status,
+        author_id=current_user.id
     )
     
     db.add(db_post)
@@ -85,23 +89,14 @@ async def update_blog_post(
             detail="Blog post not found"
         )
     
-    # Check if slug already exists (excluding current post)
-    if post_data.slug != db_post.slug:
-        existing_post = db.query(BlogPost).filter(
-            BlogPost.slug == post_data.slug,
-            BlogPost.id != post_id
-        ).first()
-        if existing_post:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="A blog post with this slug already exists"
-            )
-    
     # Update fields
-    for field, value in post_data.dict(exclude_unset=True).items():
+    update_data = post_data.dict(exclude_unset=True)
+    for field, value in update_data.items():
         setattr(db_post, field, value)
     
-    db_post.updated_at = datetime.utcnow()
+    # Set published_at if status is being set to PUBLISHED
+    if post_data.status == PostStatus.PUBLISHED and db_post.published_at is None:  # type: ignore
+        db_post.published_at = datetime.utcnow()  # type: ignore
     
     db.commit()
     db.refresh(db_post)
@@ -141,13 +136,18 @@ async def toggle_blog_post_publish(
             detail="Blog post not found"
         )
     
-    db_post.is_published = not db_post.is_published
-    db_post.updated_at = datetime.utcnow()
+    # Toggle between DRAFT and PUBLISHED
+    if db_post.status == PostStatus.DRAFT:  # type: ignore
+        db_post.status = PostStatus.PUBLISHED  # type: ignore
+        if db_post.published_at is None:  # type: ignore
+            db_post.published_at = datetime.utcnow()  # type: ignore
+    else:
+        db_post.status = PostStatus.DRAFT  # type: ignore
     
     db.commit()
     db.refresh(db_post)
     
     return {
-        "message": f"Blog post {'published' if db_post.is_published else 'unpublished'} successfully",
-        "is_published": db_post.is_published
+        "message": f"Blog post {'published' if db_post.status == PostStatus.PUBLISHED else 'unpublished'} successfully",  # type: ignore
+        "status": db_post.status.value
     } 

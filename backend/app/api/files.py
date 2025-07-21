@@ -39,7 +39,7 @@ async def upload_file(
         )
     
     # Generate unique filename
-    file_extension = Path(file.filename).suffix
+    file_extension = Path(file.filename).suffix if file.filename else ""
     unique_filename = f"{uuid.uuid4()}{file_extension}"
     file_path = UPLOAD_DIR / unique_filename
     
@@ -54,16 +54,14 @@ async def upload_file(
     file_size = os.path.getsize(file_path)
     
     # Create database record
-    file_data = FileCreate(
+    db_file = FileModel(
         filename=unique_filename,
         original_filename=file.filename,
         file_path=str(file_path),
         file_size=file_size,
         mime_type=file.content_type,
-        description=description
+        description=description  # type: ignore
     )
-    
-    db_file = FileModel(**file_data.dict())
     db.add(db_file)
     db.commit()
     db.refresh(db_file)
@@ -125,8 +123,8 @@ async def delete_file(
     
     # Delete physical file
     try:
-        if os.path.exists(db_file.file_path):
-            os.remove(db_file.file_path)
+        if os.path.exists(db_file.file_path):  # type: ignore
+            os.remove(db_file.file_path)  # type: ignore
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to delete file: {str(e)}")
     
@@ -147,7 +145,7 @@ async def download_file(
     if not db_file:
         raise HTTPException(status_code=404, detail="File not found")
     
-    if not os.path.exists(db_file.file_path):
+    if not os.path.exists(db_file.file_path):  # type: ignore
         raise HTTPException(status_code=404, detail="File not found on disk")
     
     return {

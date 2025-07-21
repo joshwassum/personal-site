@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, Sun, Moon } from 'lucide-react';
+import { useSectionVisibility } from '../contexts/SectionVisibilityContext';
 
 interface HeaderProps {
   darkMode: boolean;
@@ -9,15 +10,25 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ darkMode, toggleDarkMode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isSectionVisible } = useSectionVisibility();
 
-  const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
-    { name: 'Portfolio', href: '/portfolio' },
-    { name: 'Skills', href: '/skills' },
-    { name: 'Experience', href: '/experience' },
-    { name: 'Contact', href: '/contact' },
+  // Define navigation items with their corresponding section names
+  const navigationItems = [
+    { name: 'Home', href: '/', section: null }, // Home is always visible
+    { name: 'About', href: '/about', section: 'about' },
+    { name: 'Portfolio', href: '/portfolio', section: 'portfolio' },
+    { name: 'Skills', href: '/skills', section: 'skills' },
+    { name: 'Experience', href: '/experience', section: 'experience' },
+    { name: 'Blog', href: '/blog', section: 'blog' },
+    { name: 'Newsletter', href: '/newsletter', section: 'newsletter' },
+    { name: 'Contact', href: '/contact', section: 'contact' },
   ];
+
+  // Filter navigation items based on section visibility
+  const navigation = navigationItems.filter(item => {
+    if (item.section === null) return true; // Home is always visible
+    return isSectionVisible(item.section);
+  });
 
   return (
     <header className="bg-white dark:bg-secondary-900 shadow-sm border-b border-secondary-200 dark:border-secondary-700">

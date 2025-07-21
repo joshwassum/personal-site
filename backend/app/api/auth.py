@@ -7,7 +7,7 @@ from app.schemas.auth import LoginRequest, LoginResponse, AdminUserResponse, Cha
 from app.utils.auth import verify_password, get_password_hash, create_access_token
 from app.dependencies.auth import get_current_admin
 
-router = APIRouter(prefix="/auth", tags=["authentication"])
+router = APIRouter(prefix="/api/auth", tags=["authentication"])
 
 @router.post("/login", response_model=LoginResponse)
 async def login(login_data: LoginRequest, db: Session = Depends(get_db)):
@@ -15,21 +15,28 @@ async def login(login_data: LoginRequest, db: Session = Depends(get_db)):
     # Find user by username
     user = db.query(AdminUser).filter(AdminUser.username == login_data.username).first()
     
-    if not user or not verify_password(login_data.password, user.password_hash):
+    # Validate input
+    if not login_data.username or not login_data.password:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Username and password are required"
+        )
+    
+    if not user or not verify_password(login_data.password, user.password_hash):  # type: ignore
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
     
-    if not user.is_active:
+    if not user.is_active:  # type: ignore
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Inactive user"
         )
     
     # Update last login
-    user.last_login = datetime.utcnow()
+    user.last_login = datetime.utcnow()  # type: ignore
     db.commit()
     
     # Create access token
@@ -37,9 +44,10 @@ async def login(login_data: LoginRequest, db: Session = Depends(get_db)):
     
     return LoginResponse(
         access_token=access_token,
-        user_id=user.id,
-        username=user.username,
-        email=user.email
+        token_type="bearer",
+        user_id=user.id,  # type: ignore
+        username=user.username,  # type: ignore
+        email=user.email  # type: ignore
     )
 
 @router.get("/me", response_model=AdminUserResponse)
@@ -54,13 +62,26 @@ async def change_password(
     db: Session = Depends(get_db)
 ):
     """Change admin password."""
-    if not verify_password(password_data.current_password, current_admin.password_hash):
+    # Validate input
+    if not password_data.current_password or not password_data.new_password:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Current password and new password are required"
+        )
+    
+    if len(password_data.new_password) < 8:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="New password must be at least 8 characters long"
+        )
+    
+    if not verify_password(password_data.current_password, current_admin.password_hash):  # type: ignore
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Incorrect current password"
         )
     
-    current_admin.password_hash = get_password_hash(password_data.new_password)
+    current_admin.password_hash = get_password_hash(password_data.new_password)  # type: ignore
     db.commit()
     
     return {"message": "Password updated successfully"} 

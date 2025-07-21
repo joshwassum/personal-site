@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "personal-website-backend"
+version = "1.0.0"
+description = "Backend API for personal website with admin functionality"
+authors = [{name = "Josh Wassum", email = "jcwassum@gmail.com"}]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "fastapi==0.104.1",
+    "uvicorn[standard]==0.24.0",
+    "pydantic==2.5.0",
+    "sqlalchemy==2.0.23",
+    "alembic==1.13.1",
+    "psycopg2-binary==2.9.9",
+    "python-multipart==0.0.6",
+    "python-jose[cryptography]==3.3.0",
+    "passlib[bcrypt]==1.7.4",
+    "python-dotenv==1.0.0",
+    "httpx==0.25.2",
+    "pytest==7.4.3",
+    "pytest-asyncio==0.21.1"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+
+[tool.setuptools.package-dir]
+"" = "."
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3 

@@ -3,7 +3,7 @@ from .database import Base, get_db
 from .admin import AdminUser
 from .blog import BlogPost, PostStatus
 from .newsletter import Newsletter, NewsletterStatus
-from .contact import ContactSubmission, SubmissionStatus
+from .contact import ContactMessage
 from .sections import SectionVisibility
 
 # Update AdminUser to include relationships

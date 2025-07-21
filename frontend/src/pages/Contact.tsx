@@ -55,19 +55,19 @@ const Contact: React.FC = () => {
     {
       icon: Phone,
       title: 'Phone',
-      value: '+1 (555) 123-4567',
-      link: 'tel:+15551234567',
+      value: '(540) 123-4567',
+      link: null, // Remove clickable link to prevent robocallers
     },
     {
       icon: MapPin,
       title: 'Location',
-      value: 'San Francisco, CA',
-      link: 'https://maps.google.com/?q=San+Francisco+CA',
+      value: 'Blacksburg, VA',
+      link: 'https://maps.google.com/?q=Blacksburg+VA',
     },
     {
       icon: Clock,
       title: 'Availability',
-      value: 'Mon-Fri, 9AM-6PM PST',
+      value: 'Mon-Fri, 9AM-6PM EST',
       link: null,
     },
   ];
