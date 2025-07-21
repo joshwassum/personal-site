@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Code, Database, Globe } from 'lucide-react';
+import SectionWrapper from '../components/SectionWrapper';
 
 const Home: React.FC = () => {
   const features = [
@@ -34,19 +35,23 @@ const Home: React.FC = () => {
           with React and Python.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
-            to="/portfolio"
-            className="btn-primary inline-flex items-center justify-center"
-          >
-            View My Work
-            <ArrowRight size={20} className="ml-2" />
-          </Link>
-          <Link
-            to="/contact"
-            className="btn-secondary inline-flex items-center justify-center"
-          >
-            Get In Touch
-          </Link>
+          <SectionWrapper sectionName="portfolio">
+            <Link
+              to="/portfolio"
+              className="btn-primary inline-flex items-center justify-center"
+            >
+              View My Work
+              <ArrowRight size={20} className="ml-2" />
+            </Link>
+          </SectionWrapper>
+          <SectionWrapper sectionName="contact">
+            <Link
+              to="/contact"
+              className="btn-secondary inline-flex items-center justify-center"
+            >
+              Get In Touch
+            </Link>
+          </SectionWrapper>
         </div>
       </div>
 
@@ -68,21 +73,23 @@ const Home: React.FC = () => {
       </div>
 
       {/* CTA Section */}
-      <div className="text-center bg-primary-50 dark:bg-primary-900/20 rounded-lg p-8">
-        <h2 className="text-2xl md:text-3xl font-bold text-secondary-900 dark:text-secondary-100 mb-4">
-          Ready to work together?
-        </h2>
-        <p className="text-secondary-600 dark:text-secondary-400 mb-6 max-w-2xl mx-auto">
-          Let's discuss your project and see how I can help bring your ideas to life.
-        </p>
-        <Link
-          to="/contact"
-          className="btn-primary inline-flex items-center justify-center"
-        >
-          Start a Project
-          <ArrowRight size={20} className="ml-2" />
-        </Link>
-      </div>
+      <SectionWrapper sectionName="contact">
+        <div className="text-center bg-primary-50 dark:bg-primary-900/20 rounded-lg p-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-secondary-900 dark:text-secondary-100 mb-4">
+            Ready to work together?
+          </h2>
+          <p className="text-secondary-600 dark:text-secondary-400 mb-6 max-w-2xl mx-auto">
+            Let's discuss your project and see how I can help bring your ideas to life.
+          </p>
+          <Link
+            to="/contact"
+            className="btn-primary inline-flex items-center justify-center"
+          >
+            Start a Project
+            <ArrowRight size={20} className="ml-2" />
+          </Link>
+        </div>
+      </SectionWrapper>
     </div>
   );
 };

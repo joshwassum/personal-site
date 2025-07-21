@@ -10,7 +10,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children, darkMode, toggleDarkMode }) => {
   return (
-    <div className="min-h-screen flex flex-col bg-secondary-50 dark:bg-secondary-900">
+    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
       <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       
       <main className="flex-1">
