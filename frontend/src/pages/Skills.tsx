@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Code, Globe, Smartphone, Palette, Server, Zap, Brain } from 'lucide-react';
+import { Code, Globe, Palette, Server, Zap, Brain } from 'lucide-react';
 
 interface Skill {
   name: string;

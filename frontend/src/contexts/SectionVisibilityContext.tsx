@@ -36,22 +36,46 @@ export const SectionVisibilityProvider: React.FC<SectionVisibilityProviderProps>
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // If window is undefined (test/SSR), set defaults and skip effects
+  if (typeof window === 'undefined') {
+    const value: SectionVisibilityContextType = {
+      sections: [
+        { id: '1', section_name: 'about', is_visible: true },
+        { id: '2', section_name: 'skills', is_visible: true },
+        { id: '3', section_name: 'experience', is_visible: true },
+        { id: '4', section_name: 'portfolio', is_visible: true },
+        { id: '5', section_name: 'blog', is_visible: false },
+        { id: '6', section_name: 'newsletter', is_visible: false },
+        { id: '7', section_name: 'contact', is_visible: true },
+      ],
+      loading: false,
+      error: null,
+      isSectionVisible: (sectionName: string) => {
+        return [
+          'about', 'skills', 'experience', 'portfolio', 'contact'
+        ].includes(sectionName);
+      },
+      refreshSections: async () => {},
+    };
+    return (
+      <SectionVisibilityContext.Provider value={value}>
+        {children}
+      </SectionVisibilityContext.Provider>
+    );
+  }
+
   const fetchSections = async () => {
+    setLoading(true);
+    setError(null);
     try {
-      setLoading(true);
-      setError(null);
-      
       const response = await fetch('http://localhost:8000/api/sections/visibility');
-      
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
       const data = await response.json();
       setSections(data.sections || []);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch section visibility');
-      // Set default sections if API fails
       setSections([
         { id: '1', section_name: 'about', is_visible: true },
         { id: '2', section_name: 'skills', is_visible: true },
