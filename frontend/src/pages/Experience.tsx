@@ -79,6 +79,14 @@ const Experience: React.FC = () => {
     );
   };
 
+  const companyLinks: Record<string, string> = {
+    'Linear B Systems': '', // No public link provided
+    'Transformative Management Solutions LLC': '', // No public link provided
+  };
+  const remoteRoles = ['Software Engineering Lead', 'Associate Software Engineer'];
+  const leadershipRoles = ['Software Engineering Lead', 'Power Platform Development Lead'];
+  const promotionCompanies = ['Linear B Systems'];
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Hero Section */}
@@ -107,12 +115,26 @@ const Experience: React.FC = () => {
               <div className="card hover:shadow-lg transition-shadow duration-300">
                 <div className="flex items-start justify-between mb-4">
                   <div>
-                    <h3 className="text-2xl font-bold text-secondary-900 dark:text-secondary-100">
+                    <h3 className="text-2xl font-bold text-secondary-900 dark:text-secondary-100 flex items-center gap-2">
                       {experience.title}
+                      {leadershipRoles.includes(experience.title) && (
+                        <span className="ml-2 px-2 py-0.5 rounded bg-blue-100 text-blue-700 text-xs font-semibold border border-blue-300" title="Leadership">Leadership</span>
+                      )}
+                      {remoteRoles.includes(experience.title) && (
+                        <span className="ml-2 px-2 py-0.5 rounded bg-purple-100 text-purple-700 text-xs font-semibold border border-purple-300" title="Remote">Remote</span>
+                      )}
+                      {promotionCompanies.includes(experience.company) && (
+                        <span className="ml-2 px-2 py-0.5 rounded bg-yellow-100 text-yellow-700 text-xs font-semibold border border-yellow-300" title="Promotion">Promotion</span>
+                      )}
                     </h3>
-                    <div className="flex items-center text-primary-600 dark:text-primary-400 font-medium">
+                    <div className="flex items-center text-primary-600 dark:text-primary-400 font-medium gap-2">
                       <Building size={16} className="mr-2" />
                       {experience.company}
+                      {companyLinks[experience.company] && (
+                        <a href={companyLinks[experience.company]} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${experience.company} website`} className="ml-1">
+                          <ExternalLink size={16} />
+                        </a>
+                      )}
                     </div>
                   </div>
                   <button

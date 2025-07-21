@@ -4,6 +4,14 @@ import { Calendar, MapPin, GraduationCap, Award, Heart, Code, Database, Brain, E
 const About: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      {/* Profile Photo */}
+      <div className="flex justify-center mb-8">
+        <img
+          src="/profile.jpeg"
+          alt="Josh Wassum before a half marathon"
+          className="w-40 h-40 rounded-full object-cover border-4 border-primary-600 dark:border-primary-400 shadow-lg"
+        />
+      </div>
       {/* Hero Section */}
       <div className="text-center mb-16">
         <h1 className="text-4xl md:text-6xl font-bold text-secondary-900 dark:text-secondary-100 mb-6">
@@ -152,23 +160,48 @@ const About: React.FC = () => {
         </h3>
         <div className="space-y-3">
           <div className="flex items-center text-secondary-700 dark:text-secondary-300">
-            <span className="mr-2">📧</span>
-            <span>Professional email: <span className="italic">Coming soon</span></span>
+            <span className="mr-2" aria-hidden="true">📧</span>
+            <a
+              href="mailto:joshwassum97@gmail.com"
+              className="text-primary-600 dark:text-primary-400 hover:underline"
+              aria-label="Email Josh Wassum"
+            >
+              joshwassum97@gmail.com
+            </a>
           </div>
           <div className="flex items-center text-secondary-700 dark:text-secondary-300">
-            <span className="mr-2">🔗</span>
+            <span className="mr-2" aria-hidden="true">📱</span>
+            <a
+              href="tel:2763784385"
+              className="text-primary-600 dark:text-primary-400 hover:underline"
+              aria-label="Call Josh Wassum"
+            >
+              (276) 378-4385
+            </a>
+          </div>
+          <div className="flex items-center text-secondary-700 dark:text-secondary-300">
+            <span className="mr-2" aria-hidden="true">🔗</span>
             <a
               href="https://www.linkedin.com/in/joshwassum/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary-600 dark:text-primary-400 hover:underline"
+              aria-label="LinkedIn Profile"
             >
               LinkedIn Profile
             </a>
           </div>
           <div className="flex items-center text-secondary-700 dark:text-secondary-300">
-            <span className="mr-2">🐦</span>
-            <span>Twitter: <span className="italic">Coming soon</span></span>
+            <span className="mr-2" aria-hidden="true">🐙</span>
+            <a
+              href="https://github.com/joshwassum?tab=repositories"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary-600 dark:text-primary-400 hover:underline"
+              aria-label="GitHub Repositories"
+            >
+              GitHub
+            </a>
           </div>
         </div>
       </div>

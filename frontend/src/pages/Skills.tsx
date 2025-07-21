@@ -58,6 +58,9 @@ const Skills: React.FC = () => {
     ? skills 
     : skills.filter(skill => skill.category === selectedCategory);
 
+  const certifiedSkills = ['LiquiBase'];
+  const keySkills = ['MySQL', 'SQL Server', 'TypeScript', 'Python', 'DevOps Operations', 'Azure CI/CD'];
+
   const getProficiencyColor = (proficiency: number) => {
     if (proficiency >= 90) return 'text-green-600 dark:text-green-400';
     if (proficiency >= 80) return 'text-blue-600 dark:text-blue-400';
@@ -111,18 +114,18 @@ const Skills: React.FC = () => {
         {filteredSkills.map((skill, index) => (
           <div key={index} className="card group hover:shadow-lg transition-shadow duration-300">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-secondary-900 dark:text-secondary-100">
+              <h3 className="text-xl font-bold text-secondary-900 dark:text-secondary-100 flex items-center gap-2">
                 {skill.name}
+                {certifiedSkills.includes(skill.name) && (
+                  <span className="ml-2 px-2 py-0.5 rounded bg-green-100 text-green-700 text-xs font-semibold border border-green-300" title="Certified">Certified</span>
+                )}
+                {keySkills.includes(skill.name) && skill.proficiency >= 90 && (
+                  <span className="ml-2 px-2 py-0.5 rounded bg-blue-100 text-blue-700 text-xs font-semibold border border-blue-300" title="Key Skill">Key Skill</span>
+                )}
               </h3>
-              <span className={`text-sm font-medium ${getProficiencyColor(skill.proficiency)}`}>
-                {getProficiencyLabel(skill.proficiency)}
-              </span>
+              <span className={`text-sm font-medium ${getProficiencyColor(skill.proficiency)}`}>{getProficiencyLabel(skill.proficiency)}</span>
             </div>
-            
-            <p className="text-secondary-600 dark:text-secondary-400 mb-4 text-sm">
-              {skill.description}
-            </p>
-            
+            <p className="text-secondary-600 dark:text-secondary-400 mb-4 text-sm">{skill.description}</p>
             {/* Progress Bar */}
             <div className="mb-2">
               <div className="flex justify-between text-sm text-secondary-600 dark:text-secondary-400 mb-1">

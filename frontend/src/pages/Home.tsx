@@ -31,8 +31,7 @@ const Home: React.FC = () => {
           <span className="text-primary-600 dark:text-primary-400">Josh Wassum</span>
         </h1>
         <p className="text-xl md:text-2xl text-secondary-600 dark:text-secondary-400 mb-8 max-w-3xl mx-auto">
-          Full-Stack Developer passionate about creating modern, scalable web applications
-          with React and Python.
+          Software Engineering Lead with 5+ years of experience in full-stack development, database management, and AI-augmented solutions. I thrive on solving complex problems and leading technical initiatives that drive real impact.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <SectionWrapper sectionName="portfolio">
@@ -55,21 +54,45 @@ const Home: React.FC = () => {
         </div>
       </div>
 
-      {/* Features Section */}
+      {/* Core Strengths Section */}
       <div className="grid md:grid-cols-3 gap-8 mb-16">
-        {features.map((feature, index) => (
-          <div key={index} className="card text-center">
-            <div className="flex justify-center mb-4">
-              <feature.icon size={48} className="text-primary-600 dark:text-primary-400" />
-            </div>
-            <h3 className="text-xl font-semibold text-secondary-900 dark:text-secondary-100 mb-2">
-              {feature.title}
-            </h3>
-            <p className="text-secondary-600 dark:text-secondary-400">
-              {feature.description}
-            </p>
-          </div>
-        ))}
+        <div className="card text-center">
+          <Code size={40} className="mx-auto mb-2 text-primary-600 dark:text-primary-400" />
+          <h3 className="text-xl font-semibold mb-2">Problem Solver</h3>
+          <p className="text-secondary-600 dark:text-secondary-400 text-sm">
+            I excel at tackling new challenges, learning new technologies, and delivering solutions that work—no matter the complexity.
+          </p>
+        </div>
+        <div className="card text-center">
+          <Database size={40} className="mx-auto mb-2 text-primary-600 dark:text-primary-400" />
+          <h3 className="text-xl font-semibold mb-2">Database & DevOps Expert</h3>
+          <p className="text-secondary-600 dark:text-secondary-400 text-sm">
+            Managed 50M+ row MySQL databases, led DevOps initiatives, and hold a Liquibase certification for database deployment.
+          </p>
+        </div>
+        <div className="card text-center">
+          <Globe size={40} className="mx-auto mb-2 text-primary-600 dark:text-primary-400" />
+          <h3 className="text-xl font-semibold mb-2">AI-Augmented Development</h3>
+          <p className="text-secondary-600 dark:text-secondary-400 text-sm">
+            Passionate about leveraging AI to enhance human creativity and productivity, with hands-on experience in AI integration.
+          </p>
+        </div>
+      </div>
+
+      {/* Career Highlights Section */}
+      <div className="grid md:grid-cols-3 gap-8 mb-16">
+        <div className="text-center">
+          <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">5+</div>
+          <div className="text-secondary-700 dark:text-secondary-300">Years of Experience</div>
+        </div>
+        <div className="text-center">
+          <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">50M+</div>
+          <div className="text-secondary-700 dark:text-secondary-300">Database Rows Managed</div>
+        </div>
+        <div className="text-center">
+          <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">3</div>
+          <div className="text-secondary-700 dark:text-secondary-300">Major Projects Led</div>
+        </div>
       </div>
 
       {/* CTA Section */}

@@ -49,14 +49,14 @@ const Contact: React.FC = () => {
     {
       icon: Mail,
       title: 'Email',
-      value: 'josh.wassum@example.com',
-      link: 'mailto:josh.wassum@example.com',
+      value: 'joshwassum97@gmail.com',
+      link: 'mailto:joshwassum97@gmail.com',
     },
     {
       icon: Phone,
       title: 'Phone',
-      value: '(540) 123-4567',
-      link: null, // Remove clickable link to prevent robocallers
+      value: '(276) 378-4385',
+      link: 'tel:2763784385',
     },
     {
       icon: MapPin,
@@ -75,22 +75,17 @@ const Contact: React.FC = () => {
   const socialLinks = [
     {
       name: 'GitHub',
-      url: 'https://github.com/yourusername',
+      url: 'https://github.com/joshwassum',
       icon: Github,
       color: 'hover:text-gray-900 dark:hover:text-gray-100',
     },
     {
       name: 'LinkedIn',
-      url: 'https://linkedin.com/in/yourusername',
+      url: 'https://linkedin.com/in/joshwassum',
       icon: Linkedin,
       color: 'hover:text-blue-600 dark:hover:text-blue-400',
     },
-    {
-      name: 'Twitter',
-      url: 'https://twitter.com/yourusername',
-      icon: Twitter,
-      color: 'hover:text-blue-400 dark:hover:text-blue-300',
-    },
+    // Twitter removed
   ];
 
   return (
